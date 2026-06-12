@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意礼品清单 — 45件不落俗套的精选</title>
+    <style>
+        :root {
+            --bg: #0c0c0c;
+            --surface: #161616;
+            --surface-hover: #1f1f1f;
+            --border: #2a2a2a;
+            --border-light: #333;
+            --text: #e6e6e6;
+            --text-muted: #999;
+            --accent: #d4a574;
+            --accent-ski: #6db3c7;
+            --accent-golf: #6dbf8a;
+            --accent-tech: #b88fd4;
+            --accent-art: #d4a574;
+            --accent-collect: #e0b866;
+            --accent-craft: #d97a7a;
+            --price-gold: #c9a96e;
+            --tag-bg: rgba(212, 167, 116, 0.1);
+            --shadow: 0 2px 20px rgba(0,0,0,0.4);
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        /* ── 左侧固定侧栏 ── */
+        body { padding-left: 232px; }
+        .sidebar {
+            position: fixed; top: 0; left: 0; bottom: 0;
+            width: 232px; z-index: 200;
+            background: #111;
+            border-right: 1px solid var(--border);
+            padding: 26px 16px 22px;
+            overflow-y: auto;
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .sidebar .side-title {
+            font-size: 15px; font-weight: 500; color: #fff;
+            letter-spacing: 0.05em; margin-bottom: 4px; padding: 0 10px;
+        }
+        .sidebar .side-title span { color: var(--accent); }
+        .sidebar .side-sub {
+            font-size: 11px; color: var(--text-muted);
+            padding: 0 10px; margin-bottom: 14px; letter-spacing: 0.03em;
+        }
+        .sidebar a.side-link {
+            color: var(--text-muted); text-decoration: none;
+            font-size: 13px; letter-spacing: 0.03em;
+            padding: 8px 12px; border-radius: 8px;
+            transition: all 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .sidebar a.side-link:hover, .sidebar a.side-link.active { color: #fff; background: rgba(255,255,255,0.07); }
+        .sidebar a.side-link .cnt { font-size: 11px; color: #666; }
+        .side-divider { height: 1px; background: var(--border); margin: 14px 0 12px; flex-shrink: 0; }
+
+        /* 预算滑块 */
+        .budget-box { padding: 0 10px; }
+        .budget-box .budget-label {
+            font-size: 12px; color: var(--text-muted);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 10px; letter-spacing: 0.03em;
+        }
+        .budget-box .budget-value { color: var(--price-gold); font-weight: 600; font-size: 13px; }
+        .budget-box input[type="range"] {
+            width: 100%; appearance: none; -webkit-appearance: none;
+            height: 4px; border-radius: 2px;
+            background: linear-gradient(to right, var(--accent) var(--fill, 100%), #333 var(--fill, 100%));
+            outline: none; cursor: pointer;
+        }
+        .budget-box input[type="range"]::-webkit-slider-thumb {
+            appearance: none; -webkit-appearance: none;
+            width: 16px; height: 16px; border-radius: 50%;
+            background: var(--accent); border: 2px solid #1a1a1a;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+        }
+        .budget-box input[type="range"]::-moz-range-thumb {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: var(--accent); border: 2px solid #1a1a1a;
+        }
+        .budget-box .budget-ticks {
+            display: flex; justify-content: space-between;
+            font-size: 10px; color: #555; margin-top: 6px;
+        }
+        .shown-count {
+            margin-top: 14px; padding: 10px 12px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; font-size: 12px; color: var(--text-muted);
+            text-align: center; letter-spacing: 0.03em;
+        }
+        .shown-count strong { color: var(--accent); font-weight: 600; }
+
+        /* 移动端抽屉按钮 */
+        .side-toggle {
+            display: none;
+            position: fixed; top: 14px; left: 14px; z-index: 300;
+            width: 42px; height: 42px;
+            background: rgba(22,22,22,0.9); backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light); border-radius: 10px;
+            color: #fff; font-size: 18px;
+            align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+        .side-mask {
+            display: none;
+            position: fixed; inset: 0; z-index: 150;
+            background: rgba(0,0,0,0.55);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 80px 24px 64px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 30%, rgba(212,167,116,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 20% 70%, rgba(109,179,199,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 50% at 80% 60%, rgba(184,143,212,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero h1 {
+            font-size: clamp(30px, 5.5vw, 52px);
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            color: #fff;
+            margin-bottom: 14px;
+            position: relative;
+        }
+        .hero h1 span { color: var(--accent); font-weight: 400; }
+        .hero .sub {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+            position: relative;
+        }
+        .hero .sub strong { color: var(--text); font-weight: 500; }
+
+        /* ── Container ── */
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── Section ── */
+        .section { margin: 64px 0; scroll-margin-top: 68px; }
+        .section-header {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 36px; padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header .icon-box {
+            font-size: 26px;
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--surface);
+            border-radius: 13px;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .section-header h2 {
+            font-size: 21px; font-weight: 400;
+            letter-spacing: 0.04em; color: #fff;
+        }
+        .section-header .badge {
+            margin-left: auto;
+            font-size: 12px; color: var(--text-muted);
+            background: var(--surface);
+            padding: 4px 12px; border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        /* ── Grid ── */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 22px;
+        }
+
+        /* ── Card ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.28s ease;
+            display: flex; flex-direction: column;
+            position: relative;
+        }
+        .card:hover {
+            background: var(--surface-hover);
+            border-color: var(--border-light);
+            box-shadow: var(--shadow);
+            transform: translateY(-3px);
+        }
+
+        /* 卡片顶部图片区域 */
+        .card-img {
+            height: 220px;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-img .bg-pattern {
+            position: absolute; inset: 0; opacity: 0.15; z-index: 0;
+        }
+        .card-img .product-emoji {
+            font-size: 64px;
+            position: relative; z-index: 1;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+        }
+        .card-img .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+        .card:hover .card-img .product-img {
+            transform: scale(1.05);
+        }
+        .card-img .brand-badge {
+            position: absolute;
+            top: 12px; left: 12px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            padding: 5px 10px;
+            display: flex; align-items: center; gap: 7px;
+            z-index: 2;
+        }
+        .card-img .brand-badge img {
+            width: 20px; height: 20px;
+            border-radius: 4px;
+        }
+        .card-img .brand-badge span {
+            font-size: 11px; color: #ccc; letter-spacing: 0.03em;
+        }
+
+        /* 类别配色 */
+        .ski-bg    { background: linear-gradient(135deg, #1a262e 0%, #162228 50%, #1a2228 100%); }
+        .golf-bg   { background: linear-gradient(135deg, #1a2a20 0%, #16261c 50%, #1a241e 100%); }
+        .tech-bg   { background: linear-gradient(135deg, #1f1a2a 0%, #1c1626 50%, #201a28 100%); }
+        .art-bg    { background: linear-gradient(135deg, #261f18 0%, #221c14 50%, #24201a 100%); }
+        .collect-bg{ background: linear-gradient(135deg, #262018 0%, #221e14 50%, #242218 100%); }
+        .craft-bg  { background: linear-gradient(135deg, #23181a 0%, #1f1618 50%, #221a1c 100%); }
+        .mini-bg   { background: linear-gradient(135deg, #182026 0%, #141c22 50%, #181e26 100%); }
+
+        /* 卡片内容区 */
+        .card-body { padding: 22px 24px 24px; flex: 1; display: flex; flex-direction: column; }
+        .card-body .num {
+            font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em;
+            color: var(--text-muted); margin-bottom: 6px;
+        }
+        .card-body .tags {
+            display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+        }
+        .card-body .tag {
+            font-size: 11px; padding: 3px 10px; border-radius: 20px;
+            background: var(--tag-bg); color: var(--accent);
+            letter-spacing: 0.03em;
+        }
+        .card-body h3 {
+            font-size: 17.5px; font-weight: 500; color: #fff;
+            margin-bottom: 10px; letter-spacing: 0.02em; line-height: 1.35;
+        }
+        .card-body .desc {
+            font-size: 13px; color: var(--text-muted);
+            margin-bottom: 14px; flex: 1; line-height: 1.7;
+        }
+        .card-body .highlight {
+            font-size: 12.5px; color: #c0a070;
+            padding: 10px 14px;
+            background: rgba(212,167,116,0.05);
+            border-radius: var(--radius-sm);
+            margin-bottom: 16px;
+            border-left: 2px solid rgba(212,167,116,0.25);
+            line-height: 1.6;
+        }
+        .card-body .price-row {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .card-body .price {
+            font-size: 16px; font-weight: 600;
+            color: var(--price-gold); letter-spacing: 0.02em;
+        }
+        .card-body .actions {
+            display: flex; gap: 10px; flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 9px 18px; border-radius: var(--radius-sm);
+            font-size: 12.5px; font-weight: 500;
+            text-decoration: none; letter-spacing: 0.03em;
+            transition: all 0.2s ease; cursor: pointer;
+            border: 1px solid var(--border-light);
+            background: transparent; color: var(--text);
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .btn.primary {
+            background: var(--accent); color: #1a1a1a;
+            border-color: var(--accent); font-weight: 600;
+        }
+        .btn.primary:hover { background: #c8965a; border-color: #c8965a; }
+        .btn.secondary:hover { background: var(--surface-hover); border-color: #555; color: #fff; }
+        .btn.img-link:hover { border-color: #666; color: #fff; }
+
+        /* ── Combo cards ── */
+        .combos {
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
+        }
+        .combo-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #1f1a15 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.25s ease;
+        }
+        .combo-card:hover { border-color: #555; box-shadow: var(--shadow); }
+        .combo-card .combo-emoji { font-size: 32px; margin-bottom: 8px; }
+        .combo-card h4 { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 8px; }
+        .combo-card .combo-items { font-size: 12.5px; color: var(--text-muted); margin-bottom: 10px; line-height: 1.7; }
+        .combo-card .combo-price { font-size: 14.5px; font-weight: 600; color: var(--price-gold); }
+
+        /* ── Table ── */
+        .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+        .overview-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .overview-table thead th {
+            padding: 14px 16px; text-align: left; color: var(--text-muted);
+            font-weight: 500; font-size: 11.5px; letter-spacing: 0.05em;
+            background: var(--surface); border-bottom: 2px solid var(--border);
+            position: sticky; top: 0;
+        }
+        .overview-table tbody td {
+            padding: 11px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .overview-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+        .overview-table .td-price { color: var(--price-gold); font-weight: 500; white-space: nowrap; }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center; padding: 52px 24px;
+            color: var(--text-muted); font-size: 13px;
+            border-top: 1px solid var(--border);
+            letter-spacing: 0.03em; line-height: 1.8;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1023px) {
+            body { padding-left: 0; }
+            .sidebar {
+                transform: translateX(-105%);
+                transition: transform 0.28s ease;
+                width: 250px;
+                padding-top: 68px;
+                box-shadow: 4px 0 30px rgba(0,0,0,0.5);
+            }
+            .sidebar.open { transform: none; }
+            .side-toggle { display: flex; }
+            .side-mask.show { display: block; }
+            .hero { padding-top: 72px; }
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 72px 16px 40px; }
+            .grid { grid-template-columns: 1fr; }
+            .combos { grid-template-columns: 1fr 1fr; }
+            .card-img { height: 160px; }
+            .card-img .product-emoji { font-size: 48px; }
+            .card-body { padding: 18px; }
+        }
+        @media (max-width: 480px) {
+            .combos { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════ 侧边导航 ═══════════ -->
+<button class="side-toggle" id="sideToggle" aria-label="打开导航">☰</button>
+<div class="side-mask" id="sideMask"></div>
+<aside class="sidebar" id="sidebar">
+    <div class="side-title">创意<span>礼品</span>清单</div>
+    <div class="side-sub">全部礼品 ¥10,000 以内</div>
+    <a class="side-link" href="#sport">🏅 体育运动 <span class="cnt" data-cnt="sport"></span></a>
+    <a class="side-link" href="#tech">🔬 科技酷玩 <span class="cnt" data-cnt="tech"></span></a>
+    <a class="side-link" href="#art">🎨 定制艺术 <span class="cnt" data-cnt="art"></span></a>
+    <a class="side-link" href="#collect">📚 文化收藏 <span class="cnt" data-cnt="collect"></span></a>
+    <a class="side-link" href="#craft">🛠️ 实用匠心 <span class="cnt" data-cnt="craft"></span></a>
+    <a class="side-link" href="#mini">💡 轻量创意 <span class="cnt" data-cnt="mini"></span></a>
+    <a class="side-link" href="#overview">📋 快速总览</a>
+    <a class="side-link" href="#combos">🎁 搭配建议</a>
+    <div class="side-divider"></div>
+    <div class="budget-box">
+        <div class="budget-label">预算上限 <span class="budget-value" id="budgetValue">不限</span></div>
+        <input type="range" id="budgetSlider" min="500" max="10000" step="500" value="10000">
+        <div class="budget-ticks"><span>¥500</span><span>¥5,000</span><span>¥10,000</span></div>
+    </div>
+    <div class="shown-count" id="shownCount"></div>
+</aside>
+
+<!-- ═══════════ Hero ═══════════ -->
+<header class="hero">
+    <h1>创意<span>礼品</span>清单</h1>
+    <p class="sub"><strong>45件</strong>不落俗套的精选 &nbsp;·&nbsp; 全部 ¥10,000 以内 &nbsp;·&nbsp; 创意 + 心意 &gt; 价格 &nbsp;·&nbsp; 实物 &nbsp;·&nbsp; 2026年6月更新</p>
+</header>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════
+  一、体育运动
+  ═══════════════════════════════════════ -->
+<section class="section" id="sport">
+    <div class="section-header">
+        <div class="icon-box">🏅</div>
+        <h2>体育运动</h2>
+        <span class="badge">22 项 · 滑雪/高尔夫/户外/球类/水陆健身</span>
+    </div>
+    <div class="grid">
+
+        <!-- 1. CARV 2 -->
+        <article class="card" data-min="2000">
+            <div class="card-img ski-bg">
+                <div class="brand-badge">
+                    <span>CARV</span>
+                </div>
+                <img class="product-img" src="https://storage.googleapis.com/craft-cms-assets-10aff94/uploads/Carv-2-pages/Home/_1200x630_crop_center-center_82_none/homeheader2-optimised.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Freeride_Lech.jpg/960px-Freeride_Lech.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Freeride_Lech.jpg/960px-Freeride_Lech.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 01</div>
+                <div class="tags"><span class="tag">科技</span><span class="tag">运动</span><span class="tag">AI</span></div>
+                <h3>CARV 2 智能滑雪分析传感器</h3>
+                <p class="desc">鞋垫式压力传感器 + 六轴IMU，AI实时分析滑行姿态、重心分布、立刃角度等12项数据，通过骨传导耳机语音指导，相当于请了一位AI私人教练。</p>
+                <div class="highlight">💡 精准命中滑雪爱好者"想进步"的真实痛点，科技感强但不落俗套</div>
+                <div class="price-row">
+                    <span class="price">¥2,000 – 3,000</span>
+                    <a href="https://www.google.com/search?q=CARV+2+digital+ski+coach&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://getcarv.com" target="_blank" rel="noopener" class="btn primary">🛒 官网购买</a>
+                    <a href="https://www.amazon.com/s?k=CARV+2+digital+ski+coach" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 3. AR滑雪护目镜 -->
+        <article class="card" data-min="5000">
+            <div class="card-img ski-bg">
+                <div class="brand-badge">
+                    <span>Ostloong</span>
+                </div>
+                <img class="product-img" src="https://ostloong.com/images/home/sirius-glasses.png" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Skier_wearing_goggles_and_blue_jacket_%28cropped_to_focus_on_helmet_and_goggles%29.jpg/960px-Skier_wearing_goggles_and_blue_jacket_%28cropped_to_focus_on_helmet_and_goggles%29.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Skier_wearing_goggles_and_blue_jacket_%28cropped_to_focus_on_helmet_and_goggles%29.jpg/960px-Skier_wearing_goggles_and_blue_jacket_%28cropped_to_focus_on_helmet_and_goggles%29.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 02</div>
+                <div class="tags"><span class="tag">科技</span><span class="tag">AR</span><span class="tag">运动</span></div>
+                <h3>Ostloong Sirius AR 滑雪护目镜</h3>
+                <p class="desc">瑞士Ostloong出品，集成增强现实HUD，镜片内实时显示速度、海拔、导航和同伴位置。镜片根据光照自动变色，支持语音控制。无需掏出手机即可查看关键信息。</p>
+                <div class="highlight">💡 滑雪时低头看手机很危险，AR护目镜解决了真实安全痛点</div>
+                <div class="price-row">
+                    <span class="price">¥5,000 – 9,000</span>
+                    <a href="https://www.google.com/search?q=Ostloong+Sirius+AR+ski+goggles&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://ostloong.com" target="_blank" rel="noopener" class="btn primary">🛒 Ostloong 官网</a>
+                    <a href="https://www.realskiers.com" target="_blank" rel="noopener" class="btn secondary">RealSkiers 评测</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 4. Mammut 雪崩气囊 -->
+        <article class="card" data-min="6000">
+            <div class="card-img ski-bg">
+                <div class="brand-badge">
+                    <span>Mammut</span>
+                </div>
+                <img class="product-img" src="https://images.ctfassets.net/l595fda2nfqd/42Vruqelft00TBUdTh2sjC/5a0d1836967911235ef0ce86ff9ed3c5/1010-30870-3777_main_picker.png" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Avalanche-airbag-system-03.jpg/960px-Avalanche-airbag-system-03.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Avalanche-airbag-system-03.jpg/960px-Avalanche-airbag-system-03.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 03</div>
+                <div class="tags"><span class="tag">安全</span><span class="tag">科技</span><span class="tag">野雪</span></div>
+                <h3>Mammut 雪崩安全气囊背包</h3>
+                <p class="desc">瑞士Mammut Pro X系列，采用可充电电子气囊系统（非一次性气瓶），遇雪崩拉动手柄3秒内充气膨胀，将人"浮"在雪面上。设计轻薄不臃肿，日常背负也毫不违和。</p>
+                <div class="highlight">💡 "关心对方安全"的心意远超物质本身，尤其适合玩野雪的人</div>
+                <div class="price-row">
+                    <span class="price">¥6,000 – 10,000（选1万内型号）</span>
+                    <a href="https://www.google.com/search?q=Mammut+avalanche+airbag+backpack&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.mammut.com/ch/en/products/avalanche-safety" target="_blank" rel="noopener" class="btn primary">🛒 Mammut 官网</a>
+                    <a href="https://www.backcountry.com/cat/mammut-avalanche-airbag-packs" target="_blank" rel="noopener" class="btn secondary">Backcountry</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 7. 展示架 -->
+        <article class="card" data-min="2000">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span style="font-size:11px;color:#ccc">日本木工匠人</span>
+                </div>
+                <img class="product-img" src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80" alt="" loading="lazy" onerror="if(this.src!=='https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80')this.src='https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 04</div>
+                <div class="tags"><span class="tag">匠心</span><span class="tag">家居</span><span class="tag">榫卯</span></div>
+                <h3>日本手工高尔夫球杆展示架</h3>
+                <p class="desc">日本木工匠人手工打造，选用百年树龄橡木或珍贵黑柿木，纯榫卯结构无金属件。每件独一无二，木纹即是最天然的装饰。把球杆从收纳袋里解放出来，变成一件家具艺术品。</p>
+                <div class="highlight">💡 大多数人的球杆塞在球包里落灰，这个把爱好变成家居艺术</div>
+                <div class="price-row">
+                    <span class="price">¥2,000 – 10,000（按木料与工艺）</span>
+                    <a href="https://www.google.com/search?q=Japanese+handcrafted+golf+club+display+rack&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.etsy.com/search?q=japanese+handcrafted+golf+club+display+rack" target="_blank" rel="noopener" class="btn primary">🛒 Etsy 匠人作品</a>
+                    <a href="https://www.etsy.com/search?q=wooden+golf+club+display+rack+handmade" target="_blank" rel="noopener" class="btn secondary">桧木工艺（日本）</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 8. Titleist 定制球 -->
+        <article class="card" data-min="500">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Titleist</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Golf_ball_titleist_1.jpg/960px-Golf_ball_titleist_1.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Titleist_green_backgr.jpg/960px-Titleist_green_backgr.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Titleist_green_backgr.jpg/960px-Titleist_green_backgr.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 05</div>
+                <div class="tags"><span class="tag">定制</span><span class="tag">心意</span><span class="tag">配搭</span></div>
+                <h3>定制 Titleist Pro V1 限量球</h3>
+                <p class="desc">Titleist官方定制服务，可在Pro V1球上激光雕刻个人签名、纪念日期、企业标识或座右铭。搭配手工皮质球盒（可单独定制烙印）。既有实用价值又有收藏意义。</p>
+                <div class="highlight">💡 小东西大心思，象征意义极强。适合搭配其他高尔夫礼品一起送</div>
+                <div class="price-row">
+                    <span class="price">¥500 – 1,500（含定制球盒）</span>
+                    <a href="https://www.google.com/search?q=Titleist+Pro+V1+custom+personalized+golf+balls&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.titleist.com/product/pro-v1-custom/T2029A-MPV.html" target="_blank" rel="noopener" class="btn primary">🛒 定制 Pro V1 下单页</a>
+                    <a href="https://www.titleist.com/golf-balls/custom-golf-balls/" target="_blank" rel="noopener" class="btn secondary">定制球总览</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Garmin inReach 卫星通信器 -->
+        <article class="card" data-min="3600">
+            <div class="card-img ski-bg">
+                <div class="brand-badge">
+                    <span>Garmin</span>
+                </div>
+                <img class="product-img" src="https://res.garmin.com/en/products/010-02887-00/g/cf-lg.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/b/bc/Inreach_satelliittih%C3%A4t%C3%A4l%C3%A4hetin.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/b/bc/Inreach_satelliittih%C3%A4t%C3%A4l%C3%A4hetin.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 06</div>
+                <div class="tags"><span class="tag">徒步户外</span><span class="tag">卫星科技</span><span class="tag">安全</span></div>
+                <h3>Garmin inReach Messenger Plus 卫星通信器</h3>
+                <p class="desc">基于铱星卫星网络，在完全没有手机信号的荒野也能双向收发文字、照片和语音消息，一键SOS接入全球救援。IPX7防水、耐低温，是inReach系列首款支持卫星传图传语音的设备（使用需订阅卫星服务）。</p>
+                <div class="highlight">💡 "走到地球任何角落都能给家人报平安"——这份安全感比任何装备都贵重</div>
+                <div class="price-row">
+                    <span class="price">约 ¥3,600</span>
+                    <a href="https://www.google.com/search?q=Garmin+inReach+Messenger+Plus&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.garmin.com/en-US/p/1191310/" target="_blank" rel="noopener" class="btn primary">🛒 Garmin 官网</a>
+                    <a href="https://www.amazon.com/Garmin-Messenger-Communicator-Temperature-Resistant-Water-Resistant/dp/B0DFHNGDGM" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Oru Kayak 折叠皮划艇 -->
+        <article class="card" data-min="3400">
+            <div class="card-img ski-bg">
+                <div class="brand-badge">
+                    <span>Oru Kayak</span>
+                </div>
+                <img class="product-img" src="https://cdn.shopify.com/s/files/1/0182/8165/files/Beach_LT_W_Box.png?v=1742402143&width=1200&height=1200&crop=center" alt="" loading="lazy" onerror="if(this.src!=='https://cdn.shopify.com/s/files/1/0182/8165/files/beach_LT_dogs_pdp.png?v=1743555594')this.src='https://cdn.shopify.com/s/files/1/0182/8165/files/beach_LT_dogs_pdp.png?v=1743555594';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 07</div>
+                <div class="tags"><span class="tag">水上户外</span><span class="tag">折纸设计</span><span class="tag">变形仪式感</span></div>
+                <h3>Oru Kayak 折纸折叠皮划艇</h3>
+                <p class="desc">美国旧金山品牌，以"折纸"（Oru 在日语里意为折叠）为灵感，定制聚丙烯板材做成可反复折叠的硬壳皮划艇。主推 Beach LT：折叠后是一个手提箱，约5分钟展开成3.7米长的真皮划艇，仅11.3公斤，3年质保。</p>
+                <div class="highlight">💡 一只能拎进电梯的"手提箱"，当面展开成一艘硬壳皮划艇——折纸变形过程本身就是表演</div>
+                <div class="price-row">
+                    <span class="price">¥3,400 – 8,200（入门Lake / 主推Beach LT）</span>
+                    <a href="https://www.google.com/search?q=Oru+Kayak+folding+origami&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.orukayak.com/products/beach-lt" target="_blank" rel="noopener" class="btn primary">🛒 Oru Kayak 官网</a>
+                    <a href="https://www.amazon.com/s?k=Oru+Kayak+Beach+LT" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Swarovski CL Pocket 双筒望远镜 -->
+        <article class="card" data-min="6800">
+            <div class="card-img ski-bg">
+                <div class="brand-badge">
+                    <span>Swarovski Optik</span>
+                </div>
+                <img class="product-img" src="https://images.ctfassets.net/pvkenuwtinkd/6beSEyITwqO6s7K9SNYhWO/a1bc9ec8d221b8071a65d6f85dcec6e8/CL_Pocket_Upgrade_green_transparent.png" alt="" loading="lazy" onerror="if(this.src!=='https://images.ctfassets.net/pvkenuwtinkd/5xvnkN17TqYgHlndiF6PIr/b22f12e36815adea60c4013ecb7c540e/K20_CL_Pocket_Upgrade_2206_CMYK.png')this.src='https://images.ctfassets.net/pvkenuwtinkd/5xvnkN17TqYgHlndiF6PIr/b22f12e36815adea60c4013ecb7c540e/K20_CL_Pocket_Upgrade_2206_CMYK.png';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 08</div>
+                <div class="tags"><span class="tag">徒步观鸟</span><span class="tag">奥地利光学</span><span class="tag">随身奢侈品</span></div>
+                <h3>Swarovski CL Pocket 8x25 双筒望远镜</h3>
+                <p class="desc">奥地利顶级光学品牌，1949年由水晶巨头施华洛世奇家族创立。双铰链折叠后可放进口袋，仅约350克，8倍放大，充氮防水4米，旋出式眼罩戴眼镜也能用。徒步、观鸟、旅行、看演出一镜通用。</p>
+                <div class="highlight">💡 很多人不知道施华洛世奇做的望远镜比水晶更顶级——揣在兜里的光学奢侈品</div>
+                <div class="price-row">
+                    <span class="price">¥6,800 – 7,800</span>
+                    <a href="https://www.google.com/search?q=Swarovski+CL+Pocket+8x25+binoculars&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.swarovskioptik.com/us/en/outdoor/products/binoculars/clp/clpocket/cl-pocket-8x25-ii" target="_blank" rel="noopener" class="btn primary">🛒 Swarovski Optik 官网</a>
+                    <a href="https://www.amazon.com/dp/B08YN6VBF2" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Grays 手工木质网球拍 -->
+        <article class="card" data-min="2000">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Grays 1858</span>
+                </div>
+                <img class="product-img" src="https://www.graysrackets.com/img/WT-Masterpiece-1.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://www.graysrackets.com/img/WT-Masterpiece-2.jpg')this.src='https://www.graysrackets.com/img/WT-Masterpiece-2.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 09</div>
+                <div class="tags"><span class="tag">网球</span><span class="tag">手工</span><span class="tag">1858年老店</span></div>
+                <h3>Grays「The Masterpiece」手工木质网球拍</h3>
+                <p class="desc">剑桥 Grays of Cambridge 创立于1858年，至今仍在工坊手工层压英国本土木材制拍。The Masterpiece 是1980年代以来全球首款重新商业化生产的全木质网球拍（340-345克），可实际击球也极具陈列价值。官网需联系订购。</p>
+                <div class="highlight">💡 碳纤维统治40年后，一把160年老店的手工"新木拍"本身就是网球史话题</div>
+                <div class="price-row">
+                    <span class="price">¥2,000 – 4,000</span>
+                    <a href="https://www.google.com/search?q=Grays+Masterpiece+wooden+tennis+racket&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.graysrackets.com/wood-tennis" target="_blank" rel="noopener" class="btn primary">🛒 Grays 官网</a>
+                    <a href="https://www.ebay.com/sch/i.html?_nkw=grays+wooden+tennis+racket" target="_blank" rel="noopener" class="btn secondary">eBay 搜索</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Playermaker 足球追踪器 -->
+        <article class="card" data-min="1450">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Playermaker</span>
+                </div>
+                <img class="product-img" src="https://www.playermaker.com/cdn/shop/files/preview_images/bc1e7afaf03c4e74af29fc4303a55023.thumbnail.0000000000.jpg?v=1763099118" alt="" loading="lazy" onerror="if(this.src!=='https://www.playermaker.com/cdn/shop/files/Group_755.png?crop=center&height=760&v=1761831514&width=700')this.src='https://www.playermaker.com/cdn/shop/files/Group_755.png?crop=center&height=760&v=1761831514&width=700';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 10</div>
+                <div class="tags"><span class="tag">足球</span><span class="tag">AI追踪</span><span class="tag">FIFA认证</span></div>
+                <h3>Playermaker 2.0 智能足球追踪器</h3>
+                <p class="desc">绑在球鞋上的左右脚双传感器，每秒采样1000次，追踪触球、射门力量、冲刺等25项以上指标，通过FIFA认证可在正式比赛佩戴。套装含充电盒、绑带、旅行包及12个月App会员（内含曼城专家训练建议）。</p>
+                <div class="highlight">💡 GPS背心只会"读跑动"，它直接"读脚"——送一位随身数据教练</div>
+                <div class="price-row">
+                    <span class="price">约 ¥1,450（$199）</span>
+                    <a href="https://www.google.com/search?q=Playermaker+2.0+soccer+tracker&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.playermaker.com/products/playermaker" target="_blank" rel="noopener" class="btn primary">🛒 Playermaker 官网</a>
+                    <a href="https://www.amazon.com/s?k=playermaker+2.0+soccer+tracker" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：庞伯特乒乓球AI机器人 -->
+        <article class="card" data-min="2500">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>庞伯特 PONGBOT</span>
+                </div>
+                <img class="product-img" src="img/pongbot-m-one.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/d/df/Hannover_Messe_2016_%2836%29.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/d/df/Hannover_Messe_2016_%2836%29.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 11</div>
+                <div class="tags"><span class="tag">乒乓球</span><span class="tag">AI陪练</span><span class="tag">国民运动</span></div>
+                <h3>庞伯特 M-ONE 乒乓球 AI 发球机器人</h3>
+                <p class="desc">上海创屹科技出品。用AI算法分析球路轨迹，支持无标记人体动作识别来优化打球姿态，课程难度智能调节，训练数据云端同步多终端查看。不是"定点喷球"的传统发球机，是会看你动作的AI陪练。</p>
+                <div class="highlight">💡 乒乓球是商务场合的国民运动——放在公司健身房极有展示效果，受众最广</div>
+                <div class="price-row">
+                    <span class="price">¥2,500 – 5,000</span>
+                    <a href="https://www.google.com/search?q=庞伯特+乒乓球+发球机器人&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.futuremind.com.cn/index/goods/pro_detail/cid/2.html" target="_blank" rel="noopener" class="btn primary">🛒 庞伯特官网</a>
+                    <a href="https://search.jd.com/Search?keyword=%E5%BA%9E%E4%BC%AF%E7%89%B9%E5%8F%91%E7%90%83%E6%9C%BA" target="_blank" rel="noopener" class="btn secondary">京东搜索</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：PENT LOVA 手工壶铃 -->
+        <article class="card" data-min="3900">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>PENT.</span>
+                </div>
+                <img class="product-img" src="https://www.pentfitness.com/cdn/shop/files/LOVA_Single_Kettlebell_with_wood_stand.png?v=1693418131" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/8/87/Kettlebell_truebalance_romeike.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/8/87/Kettlebell_truebalance_romeike.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 12</div>
+                <div class="tags"><span class="tag">健身</span><span class="tag">设计器物</span><span class="tag">手工</span></div>
+                <h3>PENT. LOVA 手工壶铃（胡桃木底座）</h3>
+                <p class="desc">波兰高端健身器材品牌，主打"健身器材即家居艺术品"：不锈钢+美国胡桃木+天然皮革全手工制作，常见于豪宅私人健身房与设计酒店。每只壶铃配实木展示底座（手工定制，需预留3-4周生产周期）。</p>
+                <div class="highlight">💡 放在书房是雕塑级摆件，拿起来是训练器械——几乎不可能撞款</div>
+                <div class="price-row">
+                    <span class="price">¥3,900 – 5,500（含直邮）</span>
+                    <a href="https://www.google.com/search?q=PENT+LOVA+kettlebell+walnut&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.pentfitness.com/products/lova%E2%84%A2-kettlebell-with-wooden-stand" target="_blank" rel="noopener" class="btn primary">🛒 PENT. 官网</a>
+                    <a href="https://www.amazon.com/s?k=PENT+fitness+kettlebell" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Stryd 跑步功率计 -->
+        <article class="card" data-min="1500">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Stryd</span>
+                </div>
+                <img class="product-img" src="https://images.ctfassets.net/8iip9pij3rta/7FACNDa5jLqGddEgc8InuS/9dfb16f925430037f3d75d5f8048cd54/Group_1737.png" alt="" loading="lazy" onerror="if(this.src!=='https://dbyvw4eroffpi.cloudfront.net/product-media/6HPM/422/422/Stryd-Running-Power-Meter-Footpod-Black.jpg')this.src='https://dbyvw4eroffpi.cloudfront.net/product-media/6HPM/422/422/Stryd-Running-Power-Meter-Footpod-Black.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 13</div>
+                <div class="tags"><span class="tag">跑步</span><span class="tag">功率训练</span><span class="tag">黑科技</span></div>
+                <h3>Stryd 5.0 跑步功率计</h3>
+                <p class="desc">美国科罗拉多公司，开创了"跑步功率训练"这一品类。仅约8克的传感器夹在鞋带上，即可输出功率、配速效率等指标并支持风阻检测，与Garmin、Apple Watch等主流手表生态联动。精英教练和铁三选手的标配。</p>
+                <div class="highlight">💡 自行车功率计很普遍，跑步功率计见过的人极少——给爱跑步的人"教练级"装备</div>
+                <div class="price-row">
+                    <span class="price">¥1,500 – 2,200</span>
+                    <a href="https://www.google.com/search?q=Stryd+5.0+running+power+meter&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.stryd.com/us/en/store" target="_blank" rel="noopener" class="btn primary">🛒 Stryd 官网</a>
+                    <a href="https://www.sigmasports.com/item/Stryd/Running-Power-Meter-Footpod/OMHR" target="_blank" rel="noopener" class="btn secondary">Sigma Sports</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：COROS 高驰 POD 2 -->
+        <article class="card" data-min="699">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>COROS 高驰</span>
+                </div>
+                <img class="product-img" src="https://staticcn.coros.com/coros-v2/images/pod2-2024/banner_img@2x.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://staticcn.coros.com/coros-web-faq/upload/images/5e7de0a1203d365df524069deeeca08a.jpg')this.src='https://staticcn.coros.com/coros-web-faq/upload/images/5e7de0a1203d365df524069deeeca08a.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 14</div>
+                <div class="tags"><span class="tag">跑步</span><span class="tag">国产</span><span class="tag">配高驰表</span></div>
+                <h3>COROS 高驰 POD 2 运动传感器（小破豆）</h3>
+                <p class="desc">中国品牌高驰出品，形态最接近 Stryd 的国产选择。足部佩戴仅7克（腰部17克），续航28小时，配充电盒可再充5次。提供实时配速、触地时间、左右平衡、垂直振幅等跑姿数据，跑步功率由配套的高驰手表计算。</p>
+                <div class="highlight">💡 Stryd 的国产平替思路：收礼人已用高驰表的话，一颗"小破豆"补全整套跑姿数据</div>
+                <div class="price-row">
+                    <span class="price">约 ¥699</span>
+                    <a href="https://www.google.com/search?q=COROS+POD+2+%E5%B0%8F%E7%A0%B4%E8%B1%86&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://cn.coros.com/pod2" target="_blank" rel="noopener" class="btn primary">🛒 高驰中国官网</a>
+                    <a href="https://search.jd.com/Search?keyword=COROS%20POD%202" target="_blank" rel="noopener" class="btn secondary">京东搜索</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：华为 S-TAG -->
+        <article class="card" data-min="299">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>HUAWEI</span>
+                </div>
+                <img class="product-img" src="img/huawei-s-tag.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://imgservice.suning.cn/uimg1/b2c/image/xCSf6jnRAArY1m57tSpS3g.jpg')this.src='https://imgservice.suning.cn/uimg1/b2c/image/xCSf6jnRAArY1m57tSpS3g.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 15</div>
+                <div class="tags"><span class="tag">跑步骑行</span><span class="tag">华为生态</span><span class="tag">轻量配搭</span></div>
+                <h3>华为 S-TAG 专业运动传感器</h3>
+                <p class="desc">9轴传感器本体仅7.5克，可夹鞋、夹腰，甚至夹自行车辐条测踏频。13项跑姿参数分析，典型跑步场景续航30天，50米防水，配华为手表/运动健康App。注：华为官网商城已下架，京东/苏宁自营渠道在售。</p>
+                <div class="highlight">💡 299元的"跑步豆"，给用华为手表的人最顺手的轻量配搭礼</div>
+                <div class="price-row">
+                    <span class="price">¥299 – 499（精英款双传感器）</span>
+                    <a href="https://www.google.com/search?q=%E5%8D%8E%E4%B8%BA+S-TAG+%E8%BF%90%E5%8A%A8%E4%BC%A0%E6%84%9F%E5%99%A8&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://product.suning.com/0000000000/12386507745.html" target="_blank" rel="noopener" class="btn primary">🛒 苏宁自营</a>
+                    <a href="https://consumer.huawei.com/cn/support/content/zh-cn15907640/" target="_blank" rel="noopener" class="btn secondary">华为官网介绍</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Wahoo KICKR CORE 2 骑行台 -->
+        <article class="card" data-min="4000">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Wahoo</span>
+                </div>
+                <img class="product-img" src="https://www.wahoofitness.com/media/catalog/product/k/i/kickr_core_2_share.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/d/df/Tacx_Flux_Smart_Trainer.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/d/df/Tacx_Flux_Smart_Trainer.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 16</div>
+                <div class="tags"><span class="tag">骑行</span><span class="tag">智能训练</span><span class="tag">Zwift</span></div>
+                <h3>Wahoo KICKR CORE 2 智能骑行台</h3>
+                <p class="desc">环法车队级KICKR系列的新款直驱式骑行台：电磁阻力，最大功率1800W、精度±2%、可模拟16%坡度，内置WiFi自动升级。配合Zwift可在家虚拟实景骑行，和全球车友线上约骑、比赛。</p>
+                <div class="highlight">💡 把对方的爱车变成"客厅里的环法赛道"——雨天加班季也能骑</div>
+                <div class="price-row">
+                    <span class="price">¥4,000 – 4,800</span>
+                    <a href="https://www.google.com/search?q=Wahoo+KICKR+CORE+2+smart+trainer&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.wahoofitness.com/devices/indoor-cycling/bike-trainers/kickr-core-2-buy" target="_blank" rel="noopener" class="btn primary">🛒 Wahoo 官网</a>
+                    <a href="https://search.jd.com/Search?keyword=Wahoo%20KICKR%20CORE" target="_blank" rel="noopener" class="btn secondary">京东搜索</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：FORM 智能泳镜 -->
+        <article class="card" data-min="1430">
+            <div class="card-img ski-bg">
+                <div class="brand-badge">
+                    <span>FORM</span>
+                </div>
+                <img class="product-img" src="https://www.formswim.com/cdn/shop/files/SS2.jpg?v=1712014561" alt="" loading="lazy" onerror="if(this.src!=='https://www.formswim.com/cdn/shop/files/SS2-Pro-Render_Pulse_still.jpg?v=1752168309')this.src='https://www.formswim.com/cdn/shop/files/SS2-Pro-Render_Pulse_still.jpg?v=1752168309';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 17</div>
+                <div class="tags"><span class="tag">游泳</span><span class="tag">AR显示</span><span class="tag">铁三标杆</span></div>
+                <h3>FORM Smart Swim 2 智能泳镜</h3>
+                <p class="desc">加拿大FORM出品，泳镜镜片内置AR抬头显示，边游边在眼前实时显示配速、划频、距离、心率（内置光学心率计）。实时数据和泳池/开放水域记录永久免费，无需订阅。游泳和铁三圈的标杆智能装备。</p>
+                <div class="highlight">💡 全球唯一量产的"镜片内AR显示"泳镜——数据浮在视野里，不用停下看表</div>
+                <div class="price-row">
+                    <span class="price">¥1,430 – 1,870（标准/Pro版）</span>
+                    <a href="https://www.google.com/search?q=FORM+Smart+Swim+2+goggles&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.formswim.com/products/smart-swim-2-goggles" target="_blank" rel="noopener" class="btn primary">🛒 FORM 官网</a>
+                    <a href="https://www.amazon.com/s?k=FORM+Smart+Swim+2+goggles" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：HackMotion 手腕传感器 -->
+        <article class="card" data-min="2480">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>HackMotion</span>
+                </div>
+                <img class="product-img" src="https://hackmotion.com/wp-content/uploads/hackmotion-sensor-4-recolored.png" alt="" loading="lazy" onerror="if(this.src!=='https://hackmotion.com/wp-content/uploads/product-thumbnail-core.png')this.src='https://hackmotion.com/wp-content/uploads/product-thumbnail-core.png';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 18</div>
+                <div class="tags"><span class="tag">高尔夫</span><span class="tag">手腕角度</span><span class="tag">买断无订阅</span></div>
+                <h3>HackMotion Core 高尔夫手腕传感器</h3>
+                <p class="desc">戴在手腕上的传感器，把挥杆中最难自察的"手腕角度"（杆面控制的核心变量）实时数据化，可对照PGA巡回赛球员数据库训练。一次性买断、终身授权、无订阅，2年保修。</p>
+                <div class="highlight">💡 教练肉眼都看不准的手腕翻转角度，变成实时曲线——专治切杆和杆面失控</div>
+                <div class="price-row">
+                    <span class="price">约 ¥2,480（Core套装）</span>
+                    <a href="https://www.google.com/search?q=HackMotion+wrist+sensor+golf&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://hackmotion.com/products/hackmotion-golf-core/" target="_blank" rel="noopener" class="btn primary">🛒 HackMotion 官网</a>
+                    <a href="https://www.amazon.com/s?k=hackmotion+wrist+sensor+golf" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Corner 出拳追踪器 -->
+        <article class="card" data-min="1430">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Corner</span>
+                </div>
+                <img class="product-img" src="https://images.squarespace-cdn.com/content/v1/5fa55fec6dfeda3e2c1409c7/1670334454424-6C09RD3A4BVB4PAQWJEC/Corner+Boxing+Smart+Punch+Trackers+-+3.png" alt="" loading="lazy" onerror="if(this.src!=='https://images.squarespace-cdn.com/content/v1/5fa55fec6dfeda3e2c1409c7/1624543447237-XB6CSC4BF766FUWU5RUK/Corner+Trackers+on+wrist.jpg')this.src='https://images.squarespace-cdn.com/content/v1/5fa55fec6dfeda3e2c1409c7/1624543447237-XB6CSC4BF766FUWU5RUK/Corner+Trackers+on+wrist.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 19</div>
+                <div class="tags"><span class="tag">拳击</span><span class="tag">国家队同款</span><span class="tag">数据复盘</span></div>
+                <h3>Corner 智能出拳追踪器（一对）</h3>
+                <p class="desc">英国Corner出品，两枚小传感器塞进专用手绑带，实时记录出拳数量、拳速、力量、工作率和组合拳。英国国家队奥运拳击训练用过。个人训练的全部追踪功能购买即含，无需订阅。</p>
+                <div class="highlight">💡 "今天打了多少拳、多快多重"全部变成可回看的数据——拳馆里的话题装备</div>
+                <div class="price-row">
+                    <span class="price">约 ¥1,430（追踪器×2+充电器+绑带）</span>
+                    <a href="https://www.google.com/search?q=Corner+boxing+punch+trackers&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://trainwithcorner.com/shop/p/corner-boxing-trackers" target="_blank" rel="noopener" class="btn primary">🛒 Corner 官网</a>
+                    <a href="https://www.amazon.com/Corner-Boxing-Tracker/dp/B0BNW7G7M1" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Blast Motion 挥棒分析器 -->
+        <article class="card" data-min="1080">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Blast Motion</span>
+                </div>
+                <img class="product-img" src="https://store.blastmotion.com/wp-content/uploads/img-product-blast-baseball-swing-analyzer-box-2-1.jpg" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 20</div>
+                <div class="tags"><span class="tag">棒球</span><span class="tag">MLB认可</span><span class="tag">视频回放</span></div>
+                <h3>Blast Motion 棒球挥棒分析器</h3>
+                <p class="desc">美国Blast Motion出品，拇指盖大小的传感器装在球棒尾部，记录挥棒速度、攻角、击球时机等指标并自动剪辑挥棒慢动作视频。MLB官方认可的挥棒分析技术，业余到职业通用。</p>
+                <div class="highlight">💡 棒尾一颗小圆扣，把每次挥棒拆成十几项指标+慢动作回放</div>
+                <div class="price-row">
+                    <span class="price">约 ¥1,080（$149.95）</span>
+                    <a href="https://www.google.com/search?q=Blast+Motion+baseball+swing+analyzer&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://store.blastmotion.com/store/products/baseball/" target="_blank" rel="noopener" class="btn primary">🛒 Blast 官方商店</a>
+                    <a href="https://www.amazon.com/Blast-Baseball-Analyzes-Highlights-Compatible/dp/B00XAIVK6M" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：SIQ 智能篮球 -->
+        <article class="card" data-min="710">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>SIQ</span>
+                </div>
+                <img class="product-img" src="https://en.siqbasketball.com/cdn/shop/products/IndoorBall.jpg?v=1665484733" alt="" loading="lazy" onerror="if(this.src!=='https://en.siqbasketball.com/cdn/shop/products/OutdoorBall.jpg')this.src='https://en.siqbasketball.com/cdn/shop/products/OutdoorBall.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 21</div>
+                <div class="tags"><span class="tag">篮球</span><span class="tag">FIBA认证</span><span class="tag">需订阅</span></div>
+                <h3>SIQ 智能篮球</h3>
+                <p class="desc">芬兰SportIQ出品，球内嵌9轴传感器，每次投篮追踪190+数据点（命中、出手时间、出手角度、转速、一致性），全球唯一获FIBA官方认证的智能篮球。注意：完整投篮分析功能需订阅（约€7-9/月），送礼前需考虑。</p>
+                <div class="highlight">💡 篮球本身就是传感器——每一投的弧线和转速都被球"自己"记下来</div>
+                <div class="price-row">
+                    <span class="price">约 ¥710 – 770（6/7号球）</span>
+                    <a href="https://www.google.com/search?q=SIQ+smart+basketball&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://en.siqbasketball.com/products/siq-basketball" target="_blank" rel="noopener" class="btn primary">🛒 SIQ 官网</a>
+                    <a href="https://www.amazon.com/s?k=SIQ+smart+basketball" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 新增：Tangram 智能跳绳 -->
+        <article class="card" data-min="350">
+            <div class="card-img golf-bg">
+                <div class="brand-badge">
+                    <span>Tangram</span>
+                </div>
+                <img class="product-img" src="https://store.tangramfactory.com/cdn/shop/products/Pure_Straight4.jpg?crop=center&height=2000&v=1609740590&width=2000" alt="" loading="lazy" onerror="if(this.src!=='https://tangramfactory.com/main/_images/sns-img.jpg')this.src='https://tangramfactory.com/main/_images/sns-img.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 22</div>
+                <div class="tags"><span class="tag">跳绳</span><span class="tag">红点设计奖</span><span class="tag">轻量配搭</span></div>
+                <h3>Tangram SmartRope 智能跳绳</h3>
+                <p class="desc">韩国Tangram Factory出品，智能跳绳品类的开创者：绳柄内置传感器自动计数、算卡路里并同步App（免费无订阅），曾获红点设计奖。LED款还能在挥绳轨迹中悬空显示计数。</p>
+                <div class="highlight">💡 跳绳数据全自动进手机，LED款把数字"写"在空中——最轻量的运动数据礼</div>
+                <div class="price-row">
+                    <span class="price">约 ¥350 – 470</span>
+                    <a href="https://www.google.com/search?q=Tangram+SmartRope&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://store.tangramfactory.com/products/smart-rope-pure" target="_blank" rel="noopener" class="btn primary">🛒 Tangram 官方商店</a>
+                    <a href="https://www.amazon.com/s?k=tangram+smartrope" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  三、科技酷玩
+  ═══════════════════════════════════════ -->
+<section class="section" id="tech">
+    <div class="section-header">
+        <div class="icon-box">🔬</div>
+        <h2>科技酷玩</h2>
+        <span class="badge">3 项 · 非大疆/非普通电子品</span>
+    </div>
+    <div class="grid">
+
+        <!-- 11. Celestron -->
+        <article class="card" data-min="6000">
+            <div class="card-img tech-bg">
+                <div class="brand-badge">
+                    <span>Celestron</span>
+                </div>
+                <img class="product-img" src="https://www.celestron.com/cdn/shop/products/12091_NexStar_Evolution_8_1_1794d472-3dd3-45f7-9dc8-e746ce0bcce5.jpg" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 23</div>
+                <div class="tags"><span class="tag">科学</span><span class="tag">天文</span><span class="tag">深空</span></div>
+                <h3>Celestron NexStar 智能天文望远镜（6SE / 8SE）</h3>
+                <p class="desc">经典橙筒系列，自动寻星系统对准目标只需在手柄或App上选择。可观测行星环、星云、星系，SkyAlign三星校准几分钟完成。科学仪器级别，非玩具。1万预算内推荐6SE或8SE。</p>
+                <div class="highlight">💡 给成年人一份"仰望星空"的正当理由，附赠一次难忘的观星之夜</div>
+                <div class="price-row">
+                    <span class="price">¥6,000 – 10,000（6SE/8SE）</span>
+                    <a href="https://www.google.com/search?q=Celestron+NexStar+8SE+telescope&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.celestron.com/products/nexstar-8se-computerized-telescope" target="_blank" rel="noopener" class="btn primary">🛒 Celestron 官网</a>
+                    <a href="https://www.amazon.com/s?k=Celestron+NexStar+8SE" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 12. 特斯拉线圈 -->
+        <article class="card" data-min="3000">
+            <div class="card-img tech-bg">
+                <div class="brand-badge">
+                    <span>Plasma 音乐</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/225W_Zeus_Tesla_coil_-_arcs3_%28cropped%29.jpg/960px-225W_Zeus_Tesla_coil_-_arcs3_%28cropped%29.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80')this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 24</div>
+                <div class="tags"><span class="tag">极客</span><span class="tag">物理</span><span class="tag">话题之王</span></div>
+                <h3>桌面特斯拉线圈音乐播放器</h3>
+                <p class="desc">利用高压电弧产生音乐的物理装置。闪电在玻璃罩内随旋律舞动，视觉震撼力满分。可连接蓝牙播放任意音乐——从古典到摇滚，电弧都能"演奏"。桌面话题之王，理工男终极浪漫。</p>
+                <div class="highlight">💡 每个人看到第一眼都会愣住——"闪电在唱歌"，绝无仅有的桌面装饰</div>
+                <div class="price-row">
+                    <span class="price">¥3,000 – 8,000</span>
+                    <a href="https://www.google.com/search?q=tesla+coil+music+bluetooth+speaker&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.amazon.com/s?k=tesla+coil+music+bluetooth+speaker" target="_blank" rel="noopener" class="btn primary">🛒 Amazon 购买</a>
+                    <a href="https://www.amazon.com/s?k=tesla+coil+music+bluetooth+speaker&ref=nb_sb_noss" target="_blank" rel="noopener" class="btn secondary">eBay 多品牌</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 13. Bambu Lab -->
+        <article class="card" data-min="7000">
+            <div class="card-img tech-bg">
+                <div class="brand-badge">
+                    <span>Bambu Lab</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Bambu_Lab_X1_Carbon_with_AMS_module_%28cropped%29.jpg/960px-Bambu_Lab_X1_Carbon_with_AMS_module_%28cropped%29.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Bambu_Lab_X1_Carbon_with_AMS_module.jpg/960px-Bambu_Lab_X1_Carbon_with_AMS_module.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Bambu_Lab_X1_Carbon_with_AMS_module.jpg/960px-Bambu_Lab_X1_Carbon_with_AMS_module.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 25</div>
+                <div class="tags"><span class="tag">创造</span><span class="tag">工具</span><span class="tag">碳纤维</span></div>
+                <h3>Bambu Lab X1 Carbon 高端3D打印机套装</h3>
+                <p class="desc">消费级3D打印天花板。全自动校准、多色打印、支持碳纤维/尼龙等工程材料。配套MakerWorld模型库数十万免费模型。从零件到模型、从工具到艺术品，想象力是唯一限制。</p>
+                <div class="highlight">💡 送的不是机器，是"从想到做只需几小时"的创造自由</div>
+                <div class="price-row">
+                    <span class="price">¥7,000 – 10,000（单机版）</span>
+                    <a href="https://www.google.com/search?q=Bambu+Lab+X1+Carbon+3D+printer&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://us.store.bambulab.com/products/x1-carbon" target="_blank" rel="noopener" class="btn primary">🛒 Bambu Lab 官方商城</a>
+                    <a href="https://us.store.bambulab.com/products/x1-carbon" target="_blank" rel="noopener" class="btn secondary">Bambu Lab 官网</a>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  四、定制艺术品
+  ═══════════════════════════════════════ -->
+<section class="section" id="art">
+    <div class="section-header">
+        <div class="icon-box">🎨</div>
+        <h2>定制艺术品</h2>
+        <span class="badge">2 项</span>
+    </div>
+    <div class="grid">
+
+        <!-- 15. Meural -->
+        <article class="card" data-min="5000">
+            <div class="card-img art-bg">
+                <div class="brand-badge">
+                    <span>Meural</span>
+                </div>
+                <img class="product-img" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Van_der_Heyden%2C_Jan_-_Two_Churches_and_a_Town_Wall_-_Google_Art_Project.jpg/960px-Van_der_Heyden%2C_Jan_-_Two_Churches_and_a_Town_Wall_-_Google_Art_Project.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Van_der_Heyden%2C_Jan_-_Two_Churches_and_a_Town_Wall_-_Google_Art_Project.jpg/960px-Van_der_Heyden%2C_Jan_-_Two_Churches_and_a_Town_Wall_-_Google_Art_Project.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 26</div>
+                <div class="tags"><span class="tag">科技</span><span class="tag">艺术</span><span class="tag">Netgear</span></div>
+                <h3>Meural Canvas 数字艺术画框</h3>
+                <p class="desc">27寸高显色数字画布，内置全球顶级博物馆授权作品库（梵高、莫奈、大都会等），也可上传自己的照片。屏幕表面有特殊涂层，画面随室内光线自然变化，视觉上几乎无法与真实画作区分。</p>
+                <div class="highlight">💡 一幅画框里装下一座美术馆——摆在桌上完全不违和</div>
+                <div class="price-row">
+                    <span class="price">¥5,000 – 8,000</span>
+                    <a href="https://www.google.com/search?q=Meural+Canvas+digital+art+frame&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.meural.com" target="_blank" rel="noopener" class="btn primary">🛒 Meural 官网</a>
+                    <a href="https://www.amazon.com/s?k=Meural+Canvas" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 16. 苏绣 -->
+        <article class="card" data-min="5000">
+            <div class="card-img art-bg">
+                <div class="brand-badge">
+                    <span style="font-size:11px;color:#ccc">苏州/四川刺绣</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/6/67/Suzhou_cat_embroidery.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Shuzhou.manufaktura.jedwabny.haft.artystyczny.JPG/960px-Shuzhou.manufaktura.jedwabny.haft.artystyczny.JPG')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Shuzhou.manufaktura.jedwabny.haft.artystyczny.JPG/960px-Shuzhou.manufaktura.jedwabny.haft.artystyczny.JPG';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 27</div>
+                <div class="tags"><span class="tag">传统工艺</span><span class="tag">情感</span><span class="tag">传代</span></div>
+                <h3>苏绣 / 蜀绣定制装裱</h3>
+                <p class="desc">根据收礼人提供的照片（家庭合影、宠物、风景），由苏州或四川刺绣大师一针一线手工绣成。数月工时，数千种丝线配色，最终装裱为完整艺术品。一张照片变成了可以传代的刺绣。</p>
+                <div class="highlight">💡 照片变成传代艺术品——"心意"的重量级完全不一样</div>
+                <div class="price-row">
+                    <span class="price">¥5,000 – 10,000（中小尺寸）</span>
+                    <a href="https://www.google.com/search?q=苏绣+定制+照片+刺绣+大师&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.suembroidery.com/" target="_blank" rel="noopener" class="btn primary">🛒 Su Embroidery Studio（苏州）</a>
+                    <a href="https://www.etsy.com/shop/Suzhouembroidery" target="_blank" rel="noopener" class="btn secondary">Etsy 苏绣店铺</a>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  五、文化收藏
+  ═══════════════════════════════════════ -->
+<section class="section" id="collect">
+    <div class="section-header">
+        <div class="icon-box">📚</div>
+        <h2>文化收藏</h2>
+        <span class="badge">3 项</span>
+    </div>
+    <div class="grid">
+
+        <!-- 17. 古董地图 -->
+        <article class="card" data-min="3000">
+            <div class="card-img collect-bg">
+                <div class="brand-badge">
+                    <span>RareMaps</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/1794_Samuel_Dunn_Wall_Map_of_the_World_in_Hemispheres_-_Geographicus_-_World2-dunn-1794.jpg/960px-1794_Samuel_Dunn_Wall_Map_of_the_World_in_Hemispheres_-_Geographicus_-_World2-dunn-1794.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/17th_century_world_map_-_Nova_Totius_Terrarum_Orbis_Tabula.jpg/960px-17th_century_world_map_-_Nova_Totius_Terrarum_Orbis_Tabula.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/17th_century_world_map_-_Nova_Totius_Terrarum_Orbis_Tabula.jpg/960px-17th_century_world_map_-_Nova_Totius_Terrarum_Orbis_Tabula.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 28</div>
+                <div class="tags"><span class="tag">历史</span><span class="tag">收藏</span><span class="tag">孤品</span></div>
+                <h3>古董地图（Original Antique Map）</h3>
+                <p class="desc">19世纪或更早的铜版/石版手着色城市地图或世界地图。如1890年代上海/北京地图、东印度公司时期亚洲图、17世纪荷兰黄金时代的世界海图。每张附带正规古董商鉴定证书。</p>
+                <div class="highlight">💡 挂在办公室墙上，既是装饰也是"以古观今"的绝佳谈资</div>
+                <div class="price-row">
+                    <span class="price">¥3,000 – 10,000（19世纪单页地图）</span>
+                    <a href="https://www.google.com/search?q=antique+map+Shanghai+Beijing+19th+century&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.raremaps.com" target="_blank" rel="noopener" class="btn primary">🛒 RareMaps（全球最大）</a>
+                    <a href="https://www.crouchrarebooks.com" target="_blank" rel="noopener" class="btn secondary">Daniel Crouch 画廊</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 18. 陨石/化石 -->
+        <article class="card" data-min="1000">
+            <div class="card-img collect-bg">
+                <div class="brand-badge">
+                    <span>Aerolite</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Iron_meteorite._Toluca%2C_Mexico-8913.jpg/960px-Iron_meteorite._Toluca%2C_Mexico-8913.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://www.fossilera.com/p/1293/fossilera-intro-image.jpg')this.src='https://www.fossilera.com/p/1293/fossilera-intro-image.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 29</div>
+                <div class="tags"><span class="tag">科学</span><span class="tag">宇宙</span><span class="tag">远古</span></div>
+                <h3>陨石 / 化石标本（带证书）</h3>
+                <p class="desc">铁陨石的维斯台登纹（Widmanstätten pattern）是宇宙在极端慢冷条件下形成的独特晶体结构，无法人工制造。或选择三叶虫、恐龙牙齿等高质量化石。每件附正规鉴定证书。</p>
+                <div class="highlight">💡 手里拿着一块比地球还古老的东西——这种体验无法用价格衡量</div>
+                <div class="price-row">
+                    <span class="price">陨石 ¥3K-10K；化石 ¥1K-10K</span>
+                    <a href="https://www.google.com/search?q=iron+meteorite+Widmanst%C3%A4tten+pattern+slice&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.aerolite.org/shop" target="_blank" rel="noopener" class="btn primary">🛒 Aerolite 陨石</a>
+                    <a href="https://www.fossilera.com" target="_blank" rel="noopener" class="btn secondary">FossilEra 化石</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 20. 限量版画 -->
+        <article class="card" data-min="5000">
+            <div class="card-img collect-bg">
+                <div class="brand-badge">
+                    <span>Artsy</span>
+                </div>
+                <img class="product-img" src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800&q=80" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Great_Wave_off_Kanagawa2.jpg/960px-Great_Wave_off_Kanagawa2.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Great_Wave_off_Kanagawa2.jpg/960px-Great_Wave_off_Kanagawa2.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 30</div>
+                <div class="tags"><span class="tag">艺术</span><span class="tag">收藏</span><span class="tag">编号</span></div>
+                <h3>限量编号版画</h3>
+                <p class="desc">选择收礼人欣赏的艺术家（吴冠中、赵无极、村上隆、草间弥生、奈良美智等），购买其官方授权限量编号石版/丝网版画。每张附艺术家签名/盖章及权威鉴定证书。</p>
+                <div class="highlight">💡 原作动辄千万，限量版画几千到几万就能拥有艺术家认证的作品</div>
+                <div class="price-row">
+                    <span class="price">¥5,000 – 10,000（按艺术家与版次）</span>
+                    <a href="https://www.google.com/search?q=limited+edition+print+Zao+Wou-ki+Kusama&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.artsy.net/collect/prints" target="_blank" rel="noopener" class="btn primary">🛒 Artsy 版画</a>
+                    <a href="https://www.christies.com" target="_blank" rel="noopener" class="btn secondary">佳士得拍卖</a>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  六、实用匠心
+  ═══════════════════════════════════════ -->
+<section class="section" id="craft">
+    <div class="section-header">
+        <div class="icon-box">🛠️</div>
+        <h2>实用匠心</h2>
+        <span class="badge">4 项</span>
+    </div>
+    <div class="grid">
+
+        <!-- 21. 定制皮具 -->
+        <article class="card" data-min="3000">
+            <div class="card-img craft-bg">
+                <div class="brand-badge">
+                    <span style="font-size:11px;color:#ccc">日本/意大利匠人</span>
+                </div>
+                <img class="product-img" src="https://www.herz-bag.jp/wp-content/uploads/2016/03/DSC_9200.jpg" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 31</div>
+                <div class="tags"><span class="tag">手工</span><span class="tag">定制</span><span class="tag">陪伴型</span></div>
+                <h3>手工定制皮具套组（日本/意大利匠人）</h3>
+                <p class="desc">选用日本栃木皮革或意大利托斯卡纳植鞣革，由匠人一对一量手定制钱包、卡包或旅行皮具小件。可选皮革颜色、缝线配色、内衬材质，甚至烙上个人印记。使用越久越有光泽和个性。</p>
+                <div class="highlight">💡 和爱马仕同等级皮料，但"为你一个人做的"——是"陪伴型"礼物</div>
+                <div class="price-row">
+                    <span class="price">¥3,000 – 8,000（钱包/旅行小件）</span>
+                    <a href="https://www.google.com/search?q=Japanese+handmade+leather+briefcase+栃木+leather&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.etsy.com/search?q=japanese+handmade+leather+briefcase+custom" target="_blank" rel="noopener" class="btn primary">🛒 Etsy 匠人作品</a>
+                    <a href="https://www.herz-bag.jp" target="_blank" rel="noopener" class="btn secondary">HERZ（日本工作室）</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 23. 客制化键盘 -->
+        <article class="card" data-min="5000">
+            <div class="card-img craft-bg">
+                <div class="brand-badge">
+                    <span>NovelKeys</span>
+                </div>
+                <img class="product-img" src="https://keycult.com/cdn/shop/products/WT80-A_1_1200x800_crop_center.jpg" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 32</div>
+                <div class="tags"><span class="tag">科技</span><span class="tag">匠心</span><span class="tag">限量</span></div>
+                <h3>客制化机械键盘限量套件</h3>
+                <p class="desc">高端客制化套件（Keycult、Matrix、Percent Studio等限量款），铝锭CNC一体成型外壳，自选轴体、键帽、配色组装。手感和声音都是工业化量产品完全不能比的。</p>
+                <div class="highlight">💡 不是键盘，是"手指的座驾"——每天敲几万次的东西</div>
+                <div class="price-row">
+                    <span class="price">¥5,000 – 10,000（选1万内套件）</span>
+                    <a href="https://www.google.com/search?q=Keycult+custom+mechanical+keyboard&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://novelkeys.com" target="_blank" rel="noopener" class="btn primary">🛒 NovelKeys</a>
+                    <a href="https://www.keycult.com" target="_blank" rel="noopener" class="btn secondary">Keycult 官网</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 24. 堺市厨刀 -->
+        <article class="card" data-min="3000">
+            <div class="card-img craft-bg">
+                <div class="brand-badge">
+                    <span style="font-size:11px;color:#ccc">堺市 600年传承</span>
+                </div>
+                <img class="product-img" src="https://cdn.shopify.com/s/files/1/1373/2665/files/Enrich_Your_Cooking_Life_A02.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://japanesechefsknife.com/cdn/shop/collections/IMG_7265_1b8dec5c-8b15-42b0-a27c-178e775aec9b_390x.jpg')this.src='https://japanesechefsknife.com/cdn/shop/collections/IMG_7265_1b8dec5c-8b15-42b0-a27c-178e775aec9b_390x.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 33</div>
+                <div class="tags"><span class="tag">传统工艺</span><span class="tag">传代</span><span class="tag">600年</span></div>
+                <h3>日本堺市手工锻造厨刀套组</h3>
+                <p class="desc">日本大阪堺市拥有600年刀具锻造传统。一位匠人一年仅产几十把刀，每一把的刀刃纹路如指纹般独一无二。可选柳刃（刺身刀）、牛刀（主厨刀）或三德刀，1万预算内可选一把高级单刀或两把组合，配手工木制刀架。</p>
+                <div class="highlight">💡 "切下去的那一刻就知道不一样"——是工具也是传代品</div>
+                <div class="price-row">
+                    <span class="price">¥3,000 – 10,000（单刀或双刀组合）</span>
+                    <a href="https://www.google.com/search?q=Sakai+Japanese+handmade+kitchen+knife+堺市&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://japanesechefsknife.com" target="_blank" rel="noopener" class="btn primary">🛒 JapaneseChefsKnife</a>
+                    <a href="https://www.hocho-knife.com" target="_blank" rel="noopener" class="btn secondary">Hocho Knife</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 25. 手工眼镜 -->
+        <article class="card" data-min="3000">
+            <div class="card-img craft-bg">
+                <div class="brand-badge">
+                    <span>Masunaga</span>
+                </div>
+                <img class="product-img" src="https://dita.com/cdn/shop/products/SEQUOIA_DRX-2086-A-BLK-54-FRONT_50c45ad1-62fa-4d10-baf3-48671c70a3fb_1200x.jpg" alt="" loading="lazy">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 34</div>
+                <div class="tags"><span class="tag">手工</span><span class="tag">百年</span><span class="tag">低调</span></div>
+                <h3>增永眼镜 / DITA 手工眼镜</h3>
+                <p class="desc">日本福井县增永生（Masunaga）创立于1905年，百年手工眼镜工坊。美国DITA以钛合金和醋酸纤维材料闻名，好莱坞明星和硅谷大佬佩戴率极高。每一副都是手工打磨抛光，完全没有工业化痕迹。</p>
+                <div class="highlight">💡 架在鼻梁上每天12小时的东西，值得是最好的一副</div>
+                <div class="price-row">
+                    <span class="price">¥3,000 – 10,000</span>
+                    <a href="https://www.google.com/search?q=Masunaga+1905+handmade+eyeglasses&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.masunaga1905.com" target="_blank" rel="noopener" class="btn primary">🛒 Masunaga 官网</a>
+                    <a href="https://www.dita.com" target="_blank" rel="noopener" class="btn secondary">DITA 官网</a>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  七、轻量创意（¥2000内 · 小体积）
+  ═══════════════════════════════════════ -->
+<section class="section" id="mini">
+    <div class="section-header">
+        <div class="icon-box">💡</div>
+        <h2>轻量创意</h2>
+        <span class="badge">11 项 · ¥2000内 · 小体积 · 不限场景</span>
+    </div>
+    <div class="grid">
+
+        <!-- 26. novium Hoverpen -->
+        <article class="card" data-min="1100">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>novium</span>
+                </div>
+                <img class="product-img" src="https://noviumdesign.com/cdn/shop/products/hoverpen-interstellar-edition-411339.jpg?v=1697946709&width=2048" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Fountain_pen_nib_%28Unsplash%29.jpg/960px-Fountain_pen_nib_%28Unsplash%29.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Fountain_pen_nib_%28Unsplash%29.jpg/960px-Fountain_pen_nib_%28Unsplash%29.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 35</div>
+                <div class="tags"><span class="tag">磁悬浮</span><span class="tag">陨石</span><span class="tag">桌面话题</span></div>
+                <h3>novium Hoverpen 磁悬浮笔（陨石版）</h3>
+                <p class="desc">笔身悬浮在磁力底座上缓缓旋转，无需电池和充电。Interstellar 版内嵌约1克 Muonionalusta 陨石碎片，附真品证书，官方礼盒包装。可替换国际标准 Schmidt D1 笔芯，是实用文具也是桌面动态雕塑。</p>
+                <div class="highlight">💡 "悬浮在桌上的一支笔"，开会时的话题制造机</div>
+                <div class="price-row">
+                    <span class="price">¥1,100 – 1,800</span>
+                    <a href="https://www.google.com/search?q=novium+hoverpen+interstellar+meteorite&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://noviumdesign.com/products/hoverpen-interstellar" target="_blank" rel="noopener" class="btn primary">🛒 novium 官网</a>
+                    <a href="https://www.amazon.com/s?k=novium+hoverpen" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 27. MOVA 光能自转地球仪 -->
+        <article class="card" data-min="900">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>MOVA</span>
+                </div>
+                <img class="product-img" src="https://www.movaglobes.com/cdn/shop/files/7R5A9223_S-ppp.jpg?v=1763353243" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Earthrise_over_Compton_crater_-LRO_full_res.jpg/960px-Earthrise_over_Compton_crater_-LRO_full_res.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Earthrise_over_Compton_crater_-LRO_full_res.jpg/960px-Earthrise_over_Compton_crater_-LRO_full_res.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 36</div>
+                <div class="tags"><span class="tag">光能驱动</span><span class="tag">永动</span><span class="tag">免维护</span></div>
+                <h3>MOVA 光能自转地球仪</h3>
+                <p class="desc">靠环境光和地球磁场驱动，无电池无电线，球体在透明支架上永远静音自转。除地球外还有梵高星空、月球、火星等几十种球面图案。4.5寸款只有手掌大小，放在任何桌面都不占地方。</p>
+                <div class="highlight">💡 一个永远在转的小地球，"自己会动"的桌面摆件几乎没人撞款</div>
+                <div class="price-row">
+                    <span class="price">¥900 – 1,800（按尺寸）</span>
+                    <a href="https://www.google.com/search?q=MOVA+globe+self+rotating&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.movaglobes.com/" target="_blank" rel="noopener" class="btn primary">🛒 MOVA 官网</a>
+                    <a href="https://www.amazon.com/s?k=MOVA+globe" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 28. AstroReality 月球模型 -->
+        <article class="card" data-min="700">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>AstroReality</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/960px-FullMoon2010.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/LRO_Tycho_Central_Peak.jpg/960px-LRO_Tycho_Central_Peak.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/LRO_Tycho_Central_Peak.jpg/960px-LRO_Tycho_Central_Peak.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 37</div>
+                <div class="tags"><span class="tag">NASA数据</span><span class="tag">AR交互</span><span class="tag">天文</span></div>
+                <h3>AstroReality LUNAR Pro 月球模型</h3>
+                <p class="desc">基于NASA探测数据3D打印再手工上色，4.72寸球体精确还原月面地形的每一处环形山。配套App对准模型即可AR交互探索月球知识。可加购月面浮雕笔记本组成"月球套装"。</p>
+                <div class="highlight">💡 把月亮捧在手心，天文版"案头清供"</div>
+                <div class="price-row">
+                    <span class="price">¥700 – 1,600</span>
+                    <a href="https://www.google.com/search?q=AstroReality+lunar+pro+moon+model&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.amazon.com/AstroReality-Scientific-Interactive-Educational-Smartphone/dp/B078WF9S63" target="_blank" rel="noopener" class="btn primary">🛒 Amazon 产品页</a>
+                    <a href="https://www.amazon.com/s?k=AstroReality" target="_blank" rel="noopener" class="btn secondary">Amazon 全系列</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 29. 黄铜机关谜题 -->
+        <article class="card" data-min="700">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>Felix Ure / Kubiya</span>
+                </div>
+                <img class="product-img" src="https://kubiyagames.com/cdn/shop/collections/Jean-Claude-Constantin-maze-puzzle-kubiya-games_1200x1200.jpg?v=1708996117" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/3/33/Japanese_Secret_Puzzle_Box.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/3/33/Japanese_Secret_Puzzle_Box.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 38</div>
+                <div class="tags"><span class="tag">机械</span><span class="tag">解谜</span><span class="tag">仪式感</span></div>
+                <h3>黄铜机关谜题 / 谜盒</h3>
+                <p class="desc">伦敦设计师 Felix Ure 的 Titan 整块实心黄铜谜题，外表极简，开启需要发现隐藏机关；Kubiya Games 还有七步序列解锁的黄铜谜盒。把小纪念品锁在里面送出，对方必须亲手"破解"才能拿到。</p>
+                <div class="highlight">💡 送礼自带解谜环节，拆礼物变成一场小型仪式</div>
+                <div class="price-row">
+                    <span class="price">¥700 – 2,000</span>
+                    <a href="https://www.google.com/search?q=Felix+Ure+Titan+brass+puzzle&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://kubiyagames.com/collections/mechanical-puzzles" target="_blank" rel="noopener" class="btn primary">🛒 Kubiya Games</a>
+                    <a href="https://www.etsy.com/market/mechanical_puzzle_boxes" target="_blank" rel="noopener" class="btn secondary">Etsy 谜盒</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 30. 永动行星仪 -->
+        <article class="card" data-min="1000">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>Yanko Design</span>
+                </div>
+                <img class="product-img" src="https://shop.yankodesign.com/cdn/shop/files/perpetual_orrery_kinetic_art_05_1200x1200.jpg?v=1723862552" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/A_Philosopher_Giving_a_Lecture_on_the_Orrery_-_DPLA_-_845fe5699eb38da75dacaa804d69acf0.jpg/960px-A_Philosopher_Giving_a_Lecture_on_the_Orrery_-_DPLA_-_845fe5699eb38da75dacaa804d69acf0.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/A_Philosopher_Giving_a_Lecture_on_the_Orrery_-_DPLA_-_845fe5699eb38da75dacaa804d69acf0.jpg/960px-A_Philosopher_Giving_a_Lecture_on_the_Orrery_-_DPLA_-_845fe5699eb38da75dacaa804d69acf0.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 39</div>
+                <div class="tags"><span class="tag">机械美学</span><span class="tag">黄铜</span><span class="tag">天文</span></div>
+                <h3>桌面永动行星仪（Orrery）</h3>
+                <p class="desc">黄铜+钢打造的太阳系行星运转仪，直径仅168mm。月相同步精确显示，还带一颗33年周期的 Tempel-Tuttle 彗星沿椭圆轨道运行。18世纪欧洲贵族书房的标配仪器，缩小到了现代桌面。</p>
+                <div class="highlight">💡 "宇宙在桌上运转"，机械齿轮版的浪漫</div>
+                <div class="price-row">
+                    <span class="price">¥1,000 – 2,000</span>
+                    <a href="https://www.google.com/search?q=desktop+orrery+brass+kinetic&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://shop.yankodesign.com/products/perpetual-orrery-kinetic-art" target="_blank" rel="noopener" class="btn primary">🛒 Yanko Design</a>
+                    <a href="https://www.etsy.com/market/orrery" target="_blank" rel="noopener" class="btn secondary">Etsy 行星仪</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 31. FitzRoy 风暴瓶 -->
+        <article class="card" data-min="100">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>FitzRoy</span>
+                </div>
+                <img class="product-img" src="https://www.bitsandpieces.com/cdn/shop/files/47704.webp" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/6/6b/Storm_Glass_FitzRoy_Sturmglas.JPG')this.src='https://upload.wikimedia.org/wikipedia/commons/6/6b/Storm_Glass_FitzRoy_Sturmglas.JPG';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 40</div>
+                <div class="tags"><span class="tag">历史复刻</span><span class="tag">航海</span><span class="tag">配搭佳品</span></div>
+                <h3>FitzRoy 风暴瓶（航海气象仪）</h3>
+                <p class="desc">19世纪 FitzRoy 舰长（达尔文"小猎犬号"的船长）用来预测天气的结晶瓶复刻。瓶内晶体随天气变化呈现羽毛状、絮状、星点状等不同形态，每天看都不一样。体积小颜值高，自带航海历史故事。</p>
+                <div class="highlight">💡 数百元就能送出"达尔文同款航海仪器"，做主礼搭配件极佳</div>
+                <div class="price-row">
+                    <span class="price">¥100 – 400</span>
+                    <a href="https://www.google.com/search?q=FitzRoy+storm+glass+weather+predictor&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.bitsandpieces.com/products/fitzroy-historic-storm-glass-2pc-weather-instrument" target="_blank" rel="noopener" class="btn primary">🛒 Bits and Pieces</a>
+                    <a href="https://www.amazon.com/s?k=fitzroy+storm+glass" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 32. 定制星图 -->
+        <article class="card" data-min="400">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>Under Lucky Stars</span>
+                </div>
+                <img class="product-img" src="https://d3j4c7e2o820k1.cloudfront.net/assets/img/what/product1new-jD4UCcp.png" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Ca._1930_Star_Map_by_Elizabeth_Shurtleff.jpg/960px-Ca._1930_Star_Map_by_Elizabeth_Shurtleff.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Ca._1930_Star_Map_by_Elizabeth_Shurtleff.jpg/960px-Ca._1930_Star_Map_by_Elizabeth_Shurtleff.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 41</div>
+                <div class="tags"><span class="tag">定制</span><span class="tag">纪念时刻</span><span class="tag">情感</span></div>
+                <h3>定制星图（那一刻的星空）</h3>
+                <p class="desc">输入任意日期+地点（公司成立日、签约日、对方的人生里程碑），用天文算法精确还原那一刻头顶真实的星空，博物馆级纸张印刷装裱。The Night Sky 用 Hahnemühle 美术纸，百年不褪色。</p>
+                <div class="highlight">💡 "您事业起航那晚的星空"，几乎不可能撞礼的定制概念</div>
+                <div class="price-row">
+                    <span class="price">¥400 – 1,100</span>
+                    <a href="https://www.google.com/search?q=custom+star+map+framed+gift&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.underluckystars.com/en" target="_blank" rel="noopener" class="btn primary">🛒 Under Lucky Stars</a>
+                    <a href="https://www.thenightsky.com/" target="_blank" rel="noopener" class="btn secondary">The Night Sky</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 33. 能作纯锡KAGO -->
+        <article class="card" data-min="300">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>能作 Nousaku</span>
+                </div>
+                <img class="product-img" src="https://www.globalkitchenjapan.com/cdn/shop/products/Nousaku_Kago_Tin_Square_Bendable_Serving_Basket_1.webp?v=1756276216" alt="" loading="lazy" onerror="if(this.src!=='https://www.globalkitchenjapan.com/cdn/shop/products/Nousaku_Kago_Tin_Square_Bendable_Serving_Basket_2.webp')this.src='https://www.globalkitchenjapan.com/cdn/shop/products/Nousaku_Kago_Tin_Square_Bendable_Serving_Basket_2.webp';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 42</div>
+                <div class="tags"><span class="tag">百年工坊</span><span class="tag">可塑形</span><span class="tag">纯锡</span></div>
+                <h3>能作（Nousaku）纯锡 KAGO 花器</h3>
+                <p class="desc">日本高冈市1916年创立的百年铸物所。100%纯锡软到可以徒手弯折，一件器物随手塑形成果篮、花器、红酒架、置物篮。送出的是"一件由收礼人自己完成设计的礼物"，茶席酒桌上的点睛之物。</p>
+                <div class="highlight">💡 全世界少有的"可以揉捏的金属器"，把玩性和工艺感兼得</div>
+                <div class="price-row">
+                    <span class="price">¥300 – 1,500</span>
+                    <a href="https://www.google.com/search?q=Nousaku+KAGO+tin+bendable+basket&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.globalkitchenjapan.com/products/nousaku-kago-hand-crafted-cast-tinware-flexible-folding-basket-square" target="_blank" rel="noopener" class="btn primary">🛒 Global Kitchen Japan</a>
+                    <a href="https://www.amazon.com/s?k=nousaku+tin" target="_blank" rel="noopener" class="btn secondary">Amazon</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 34. 朱炳仁铜 / 铜师傅 -->
+        <article class="card" data-min="300">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span style="font-size:11px;color:#ccc">朱炳仁·铜 / 铜师傅</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Incence_burner_of_copper_in_shape_of_Chinese-Lion.jpg/960px-Incence_burner_of_copper_in_shape_of_Chinese-Lion.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Closeup_of_Guanyin_%28Avalokiteshvara%29_holding_lotus-form_cup_gilt_copper_alloy_Yuan_dynasty_14th_century_CE.jpg/960px-Closeup_of_Guanyin_%28Avalokiteshvara%29_holding_lotus-form_cup_gilt_copper_alloy_Yuan_dynasty_14th_century_CE.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Closeup_of_Guanyin_%28Avalokiteshvara%29_holding_lotus-form_cup_gilt_copper_alloy_Yuan_dynasty_14th_century_CE.jpg/960px-Closeup_of_Guanyin_%28Avalokiteshvara%29_holding_lotus-form_cup_gilt_copper_alloy_Yuan_dynasty_14th_century_CE.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 43</div>
+                <div class="tags"><span class="tag">非遗技艺</span><span class="tag">铜雕</span><span class="tag">文化分量</span></div>
+                <h3>朱炳仁·铜 / 铜师傅 桌面铜雕小件</h3>
+                <p class="desc">朱炳仁是国家级非遗铜雕技艺传承人（杭州河坊街"江南铜屋"即其作品），品牌做熔铜艺术摆件和文房铜器。铜师傅是杭州的大型铜艺工坊，铜香炉、铜摆件性价比突出。两者都有大量适合办公桌的小尺寸作品。</p>
+                <div class="highlight">💡 国家级铜雕技艺做成桌面小件，文化分量足而价格亲民</div>
+                <div class="price-row">
+                    <span class="price">¥300 – 2,000</span>
+                    <a href="https://www.google.com/search?q=朱炳仁铜+熔铜+摆件&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.zbrty.com/" target="_blank" rel="noopener" class="btn primary">🛒 朱炳仁铜艺官网</a>
+                    <a href="https://tongshifu.com/" target="_blank" rel="noopener" class="btn secondary">铜师傅官网</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 35. 定制篆刻印章 -->
+        <article class="card" data-min="500">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>西泠印社</span>
+                </div>
+                <img class="product-img" src="https://upload.wikimedia.org/wikipedia/commons/f/f0/%E7%94%B0%E9%BB%83%E9%9B%95%E4%B8%89%E8%9E%AD%E7%B4%90%E7%AB%A0%E6%96%99-Square_Seal_with_Knob_In_the_Shape_of_Three_Felines_MET_2007_54_d2.jpg" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/%E7%AF%86%E5%88%BB%E5%8D%B0%E7%AB%A0.jpg/960px-%E7%AF%86%E5%88%BB%E5%8D%B0%E7%AB%A0.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/%E7%AF%86%E5%88%BB%E5%8D%B0%E7%AB%A0.jpg/960px-%E7%AF%86%E5%88%BB%E5%8D%B0%E7%AB%A0.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 44</div>
+                <div class="tags"><span class="tag">定制</span><span class="tag">文人雅趣</span><span class="tag">传代</span></div>
+                <h3>定制篆刻印章（寿山石 / 和田玉小料）</h3>
+                <p class="desc">西泠印社1904年创立于杭州孤山，"天下第一名社"，提供从百元到万元每字的定制篆刻。刻对方的名号、斋号或一句座右铭，选寿山石或和田玉小料，配上海西泠印社的潜泉印泥组成礼盒。</p>
+                <div class="highlight">💡 一方印承载名号，签名落印的仪式感是数字时代的稀缺品</div>
+                <div class="price-row">
+                    <span class="price">¥500 – 2,000</span>
+                    <a href="https://www.google.com/search?q=篆刻+印章+定制+寿山石&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://www.xlys.org.cn/" target="_blank" rel="noopener" class="btn primary">🛒 西泠印社官网</a>
+                    <a href="https://www.xlys.sh.cn/" target="_blank" rel="noopener" class="btn secondary">潜泉印泥（上海）</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- 36. 东方香氛 -->
+        <article class="card" data-min="300">
+            <div class="card-img mini-bg">
+                <div class="brand-badge">
+                    <span>观夏 To Summer</span>
+                </div>
+                <img class="product-img" src="https://cdn.shopify.com/s/files/1/0685/6612/2540/files/To-Summer_EDP_Void.jpg?v=1757522301" alt="" loading="lazy" onerror="if(this.src!=='https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Jinan_Thousand_Buddhas_Monastery_Incense_-20150520-RM-101936.jpg/960px-Jinan_Thousand_Buddhas_Monastery_Incense_-20150520-RM-101936.jpg')this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Jinan_Thousand_Buddhas_Monastery_Incense_-20150520-RM-101936.jpg/960px-Jinan_Thousand_Buddhas_Monastery_Incense_-20150520-RM-101936.jpg';">
+            </div>
+            <div class="card-body">
+                <div class="num">NO. 45</div>
+                <div class="tags"><span class="tag">东方叙事</span><span class="tag">香氛</span><span class="tag">高颜值</span></div>
+                <h3>东方香氛（观夏 To Summer / 闻献）</h3>
+                <p class="desc">观夏2018年创立，用东方植物香料做原创东方香，昆仑煮雪、空境研茶等系列与国际知名调香师合作，瓶身设计极具东方美学。闻献 DOCUMENTS 则走更浓烈的"禅酷"路线。香水、无火香薰、香膏可选。</p>
+                <div class="highlight">💡 把"东方的气味"装进瓶子，体积最小但记忆点极深的礼物</div>
+                <div class="price-row">
+                    <span class="price">¥300 – 1,500</span>
+                    <a href="https://www.google.com/search?q=观夏+To+Summer+香水+昆仑煮雪&tbm=isch" target="_blank" rel="noopener" class="btn img-link" style="font-size:11px;padding:5px 10px">🖼️ 查看图片</a>
+                </div>
+                <div class="actions">
+                    <a href="https://tosummerperfume.com/" target="_blank" rel="noopener" class="btn primary">🛒 观夏官网</a>
+                    <a href="https://tosummer.shop/" target="_blank" rel="noopener" class="btn secondary">海外购买渠道</a>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  快速总览表
+  ═══════════════════════════════════════ -->
+<section class="section" id="overview">
+    <div class="section-header">
+        <div class="icon-box">📋</div>
+        <h2>快速总览</h2>
+    </div>
+    <div class="table-wrap">
+        <table class="overview-table">
+            <thead>
+                <tr>
+                    <th>#</th><th>名称</th><th>类别</th><th>参考价格</th><th>适合人群</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-min="2000"><td>1</td><td>CARV 2 智能滑雪传感器</td><td>🏅 滑雪+科技</td><td class="td-price">¥2-3K</td><td>想提升技术的滑雪爱好者</td></tr>
+                <tr data-min="5000"><td>2</td><td>Ostloong AR滑雪护目镜</td><td>🏅 滑雪+AR</td><td class="td-price">¥5-9K</td><td>滑雪+科技双重爱好者</td></tr>
+                <tr data-min="6000"><td>3</td><td>Mammut雪崩气囊背包</td><td>🏅 滑雪+安全</td><td class="td-price">¥6-10K</td><td>野雪玩家</td></tr>
+                <tr data-min="2000"><td>4</td><td>手工高尔夫球杆展示架</td><td>🏅 高尔夫+匠心</td><td class="td-price">¥2-10K</td><td>高尔夫+家居品味</td></tr>
+                <tr data-min="500"><td>5</td><td>定制Titleist Pro V1球</td><td>🏅 高尔夫+定制</td><td class="td-price">¥0.5-1.5K</td><td>轻量级配搭礼品</td></tr>
+                <tr data-min="3600"><td>6</td><td>Garmin inReach 卫星通信器</td><td>🏅 户外+卫星</td><td class="td-price">约¥3.6K</td><td>徒步、越野、探险爱好者</td></tr>
+                <tr data-min="3400"><td>7</td><td>Oru Kayak 折纸折叠皮划艇</td><td>🏅 水上+折纸设计</td><td class="td-price">¥3.4-8.2K</td><td>露营水上玩家、设计控</td></tr>
+                <tr data-min="6800"><td>8</td><td>Swarovski CL Pocket 双筒望远镜</td><td>🏅 徒步+光学</td><td class="td-price">¥6.8-7.8K</td><td>徒步观鸟、品味随身装备</td></tr>
+                <tr data-min="2000"><td>9</td><td>Grays 手工木质网球拍</td><td>🏅 网球+手工</td><td class="td-price">¥2-4K</td><td>网球爱好者、怀旧品味</td></tr>
+                <tr data-min="1450"><td>10</td><td>Playermaker 2.0 足球追踪器</td><td>🏅 足球+AI</td><td class="td-price">约¥1.5K</td><td>踢球的人（或孩子踢球）</td></tr>
+                <tr data-min="2500"><td>11</td><td>庞伯特 M-ONE 乒乓机器人</td><td>🏅 乒乓+AI</td><td class="td-price">¥2.5-5K</td><td>乒乓爱好者、公司健身房</td></tr>
+                <tr data-min="3900"><td>12</td><td>PENT. LOVA 手工壶铃</td><td>🏅 健身+设计</td><td class="td-price">¥3.9-5.5K</td><td>健身+家居审美</td></tr>
+                <tr data-min="1500"><td>13</td><td>Stryd 5.0 跑步功率计</td><td>🏅 跑步+科技</td><td class="td-price">¥1.5-2.2K</td><td>严肃跑者、铁三玩家</td></tr>
+                <tr data-min="699"><td>14</td><td>COROS 高驰 POD 2（小破豆）</td><td>🏅 跑步+国产</td><td class="td-price">约¥0.7K</td><td>高驰手表用户、跑姿数据控</td></tr>
+                <tr data-min="299"><td>15</td><td>华为 S-TAG 运动传感器</td><td>🏅 跑步骑行+华为</td><td class="td-price">¥0.3-0.5K</td><td>华为手表用户、轻量配搭</td></tr>
+                <tr data-min="4000"><td>16</td><td>Wahoo KICKR CORE 2 骑行台</td><td>🏅 骑行+智能</td><td class="td-price">¥4-4.8K</td><td>骑行爱好者</td></tr>
+                <tr data-min="1430"><td>17</td><td>FORM Smart Swim 2 智能泳镜</td><td>🏅 游泳+AR</td><td class="td-price">¥1.4-1.9K</td><td>游泳、铁三爱好者</td></tr>
+                <tr data-min="2480"><td>18</td><td>HackMotion 手腕传感器</td><td>🏅 高尔夫+数据</td><td class="td-price">约¥2.5K</td><td>想精进挥杆的高尔夫爱好者</td></tr>
+                <tr data-min="1430"><td>19</td><td>Corner 出拳追踪器</td><td>🏅 拳击+数据</td><td class="td-price">约¥1.4K</td><td>拳击/搏击爱好者</td></tr>
+                <tr data-min="1080"><td>20</td><td>Blast Motion 挥棒分析器</td><td>🏅 棒球+数据</td><td class="td-price">约¥1.1K</td><td>棒球爱好者</td></tr>
+                <tr data-min="710"><td>21</td><td>SIQ 智能篮球</td><td>🏅 篮球+数据</td><td class="td-price">¥0.7-0.8K</td><td>篮球爱好者（注意需订阅）</td></tr>
+                <tr data-min="350"><td>22</td><td>Tangram 智能跳绳</td><td>🏅 跳绳+设计</td><td class="td-price">¥0.35-0.5K</td><td>健身轻量配搭</td></tr>
+                <tr data-min="6000"><td>23</td><td>Celestron NexStar 望远镜（6SE/8SE）</td><td>🔬 科学科技</td><td class="td-price">¥6-10K</td><td>有好奇心、爱仰望星空</td></tr>
+                <tr data-min="3000"><td>24</td><td>桌面特斯拉线圈音乐播放器</td><td>🔬 极客艺术</td><td class="td-price">¥3-8K</td><td>极客、理工男</td></tr>
+                <tr data-min="7000"><td>25</td><td>Bambu Lab X1C 3D打印机</td><td>🔬 创造工具</td><td class="td-price">¥7-10K</td><td>动手派、工程师思维</td></tr>
+                <tr data-min="5000"><td>26</td><td>Meural数字艺术画框</td><td>🎨 科技艺术</td><td class="td-price">¥5-8K</td><td>艺术爱好者、家居品味</td></tr>
+                <tr data-min="5000"><td>27</td><td>苏绣/蜀绣定制</td><td>🎨 传统工艺</td><td class="td-price">¥5-10K</td><td>注重情感、家庭回忆</td></tr>
+                <tr data-min="3000"><td>28</td><td>古董地图</td><td>📚 历史收藏</td><td class="td-price">¥3-10K</td><td>历史/地理爱好者</td></tr>
+                <tr data-min="1000"><td>29</td><td>陨石/化石标本</td><td>📚 科学收藏</td><td class="td-price">¥1-10K</td><td>科学思维、好奇心</td></tr>
+                <tr data-min="5000"><td>30</td><td>限量编号版画</td><td>📚 艺术收藏</td><td class="td-price">¥5-10K</td><td>艺术爱好者</td></tr>
+                <tr data-min="3000"><td>31</td><td>手工定制皮具（钱包/小件）</td><td>🛠️ 匠心实用</td><td class="td-price">¥3-8K</td><td>注重品味、日常实用</td></tr>
+                <tr data-min="5000"><td>32</td><td>客制化机械键盘</td><td>🛠️ 科技匠心</td><td class="td-price">¥5-10K</td><td>重度键盘用户、极客</td></tr>
+                <tr data-min="3000"><td>33</td><td>堺市手工厨刀（单刀/双刀）</td><td>🛠️ 传统工艺</td><td class="td-price">¥3-10K</td><td>下厨爱好、工艺鉴赏</td></tr>
+                <tr data-min="3000"><td>34</td><td>增永/DITA手工眼镜</td><td>🛠️ 手工实用</td><td class="td-price">¥3-10K</td><td>日常佩戴、低调品味</td></tr>
+                <tr data-min="1100"><td>35</td><td>novium Hoverpen 磁悬浮笔</td><td>💡 轻量创意</td><td class="td-price">¥1.1-1.8K</td><td>科技感桌面、文具控</td></tr>
+                <tr data-min="900"><td>36</td><td>MOVA 光能自转地球仪</td><td>💡 轻量创意</td><td class="td-price">¥0.9-1.8K</td><td>摆件控、地理迷</td></tr>
+                <tr data-min="700"><td>37</td><td>AstroReality 月球模型</td><td>💡 轻量创意</td><td class="td-price">¥0.7-1.6K</td><td>天文爱好者</td></tr>
+                <tr data-min="700"><td>38</td><td>黄铜机关谜题/谜盒</td><td>💡 轻量创意</td><td class="td-price">¥0.7-2K</td><td>解谜爱好者、动手派</td></tr>
+                <tr data-min="1000"><td>39</td><td>桌面永动行星仪</td><td>💡 轻量创意</td><td class="td-price">¥1-2K</td><td>机械美学爱好者</td></tr>
+                <tr data-min="100"><td>40</td><td>FitzRoy 风暴瓶</td><td>💡 轻量创意</td><td class="td-price">¥0.1-0.4K</td><td>颜值控、轻量配搭</td></tr>
+                <tr data-min="400"><td>41</td><td>定制星图</td><td>💡 轻量创意</td><td class="td-price">¥0.4-1.1K</td><td>纪念时刻、情感表达</td></tr>
+                <tr data-min="300"><td>42</td><td>能作纯锡 KAGO 花器</td><td>💡 轻量创意</td><td class="td-price">¥0.3-1.5K</td><td>茶席酒桌、家居品味</td></tr>
+                <tr data-min="300"><td>43</td><td>朱炳仁铜/铜师傅 桌面铜雕</td><td>💡 轻量创意</td><td class="td-price">¥0.3-2K</td><td>传统文化、文房雅器</td></tr>
+                <tr data-min="500"><td>44</td><td>定制篆刻印章</td><td>💡 轻量创意</td><td class="td-price">¥0.5-2K</td><td>书画爱好、文人雅趣</td></tr>
+                <tr data-min="300"><td>45</td><td>东方香氛（观夏/闻献）</td><td>💡 轻量创意</td><td class="td-price">¥0.3-1.5K</td><td>生活品质、气味记忆</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+  搭配建议
+  ═══════════════════════════════════════ -->
+<section class="section" id="combos">
+    <div class="section-header">
+        <div class="icon-box">🎁</div>
+        <h2>搭配建议（组合方案）</h2>
+    </div>
+    <div class="combos">
+        <div class="combo-card">
+            <div class="combo-emoji">🎿</div>
+            <h4>滑雪套装</h4>
+            <div class="combo-items">CARV 2 传感器 + Ostloong AR护目镜</div>
+            <div class="combo-price">约 ¥7,000 – 12,000</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">⛳</div>
+            <h4>高尔夫套装</h4>
+            <div class="combo-items">定制Pro V1球 + 手工球杆展示架</div>
+            <div class="combo-price">约 ¥2,500 – 11,500</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">🏕️</div>
+            <h4>户外探险套装</h4>
+            <div class="combo-items">Garmin 卫星通信器 + Swarovski 双筒望远镜</div>
+            <div class="combo-price">约 ¥10,400 – 11,400</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">🚴</div>
+            <h4>居家训练套装</h4>
+            <div class="combo-items">Wahoo KICKR 骑行台 + Stryd 跑步功率计</div>
+            <div class="combo-price">约 ¥5,500 – 7,000</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">🔬</div>
+            <h4>科技极客套装</h4>
+            <div class="combo-items">特斯拉线圈播放器 + Bambu Lab 3D打印机</div>
+            <div class="combo-price">约 ¥10,000 – 18,000</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">📖</div>
+            <h4>书房套装</h4>
+            <div class="combo-items">古董地图 + 手工皮具小件 + 定制篆刻印章</div>
+            <div class="combo-price">约 ¥6,500 – 20,000</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">🎨</div>
+            <h4>艺术套装</h4>
+            <div class="combo-items">Meural画框 + 限量编号版画</div>
+            <div class="combo-price">约 ¥10,000 – 18,000</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">🪐</div>
+            <h4>轻量科技套装</h4>
+            <div class="combo-items">Hoverpen 磁悬浮笔 + FitzRoy 风暴瓶</div>
+            <div class="combo-price">约 ¥1,200 – 2,200</div>
+        </div>
+        <div class="combo-card">
+            <div class="combo-emoji">✨</div>
+            <h4>星空情感套装</h4>
+            <div class="combo-items">定制星图（装裱）+ 黄铜谜盒（藏开启线索）</div>
+            <div class="combo-price">约 ¥1,100 – 3,100</div>
+        </div>
+    </div>
+</section>
+
+</div><!-- /.container -->
+
+<footer class="footer">
+    整理日期：2026年06月09日 &nbsp;·&nbsp; 更新：2026年06月12日 &nbsp;|&nbsp; 创意礼品清单 &nbsp;|&nbsp; 共计45项精选 · 全部 ¥10,000 以内
+    <br>
+    <span style="font-size:12px;color:#666">所有价格为参考价格，以实际购买时为准 &nbsp;|&nbsp; 点击"🛒"按钮可跳转官网或购买页面 &nbsp;|&nbsp; 点击"🖼️ 查看图片"可查看产品实拍</span>
+</footer>
+
+<script>
+(function(){
+    // ── 移动端侧栏抽屉 ──
+    var sidebar = document.getElementById('sidebar'),
+        toggle  = document.getElementById('sideToggle'),
+        mask    = document.getElementById('sideMask');
+    function closeSide(){ sidebar.classList.remove('open'); mask.classList.remove('show'); }
+    toggle.addEventListener('click', function(){
+        sidebar.classList.toggle('open'); mask.classList.toggle('show');
+    });
+    mask.addEventListener('click', closeSide);
+    sidebar.querySelectorAll('a.side-link').forEach(function(a){ a.addEventListener('click', closeSide); });
+
+    // ── 预算上限筛选 ──
+    var slider  = document.getElementById('budgetSlider'),
+        valueEl = document.getElementById('budgetValue'),
+        countEl = document.getElementById('shownCount'),
+        cards   = Array.prototype.slice.call(document.querySelectorAll('.card'));
+
+    function applyFilter(){
+        var max = parseInt(slider.value, 10), shown = 0;
+        slider.style.setProperty('--fill', ((max - 500) / (10000 - 500) * 100) + '%');
+        valueEl.textContent = max >= 10000 ? '不限（¥10,000内）' : '≤ ¥' + max.toLocaleString();
+
+        cards.forEach(function(c){
+            var min = parseInt(c.getAttribute('data-min') || '0', 10);
+            var show = min <= max;
+            c.style.display = show ? '' : 'none';
+            if (show) shown++;
+        });
+
+        // 总览表行同步筛选
+        document.querySelectorAll('tr[data-min]').forEach(function(tr){
+            tr.style.display = parseInt(tr.getAttribute('data-min'), 10) <= max ? '' : 'none';
+        });
+
+        // 各分类：更新计数、隐藏空分类
+        document.querySelectorAll('section.section').forEach(function(s){
+            var g = s.querySelector('.grid');
+            if (!g) return;
+            var vis = 0;
+            g.querySelectorAll('.card').forEach(function(c){ if (c.style.display !== 'none') vis++; });
+            var badge = s.querySelector('.badge');
+            if (badge){
+                if (!badge.hasAttribute('data-suffix')){
+                    var t = badge.textContent, i = t.indexOf('项');
+                    badge.setAttribute('data-suffix', i >= 0 ? t.slice(i + 1) : '');
+                }
+                badge.textContent = vis + ' 项' + badge.getAttribute('data-suffix');
+            }
+            s.style.display = vis ? '' : 'none';
+            var cnt = document.querySelector('[data-cnt="' + s.id + '"]');
+            if (cnt) cnt.textContent = vis;
+        });
+
+        countEl.innerHTML = '当前显示 <strong>' + shown + '</strong> / ' + cards.length + ' 件';
+    }
+    slider.addEventListener('input', applyFilter);
+
+    // ── 滚动高亮当前分类 ──
+    var links = sidebar.querySelectorAll('a.side-link'), map = {};
+    links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+    var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+            if (e.isIntersecting && map[e.target.id]){
+                links.forEach(function(a){ a.classList.remove('active'); });
+                map[e.target.id].classList.add('active');
+            }
+        });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    document.querySelectorAll('section.section').forEach(function(s){ obs.observe(s); });
+
+    applyFilter();
+})();
+</script>
+
+</body>
+</html>
